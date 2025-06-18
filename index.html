@@ -6,7 +6,6 @@
   <title>HLAXHO</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <style>
     * {
@@ -65,62 +64,22 @@
       animation: float 4s ease-in-out infinite;
     }
 
-    nav {
-      margin-top: 1rem;
-    }
-
-    nav a {
-      margin: 0 1rem;
-      text-decoration: none;
-      color: #d7aaff;
-      font-weight: bold;
-      transition: 0.3s;
-      position: relative;
-    }
-
-    nav a::after {
-      content: '';
-      display: block;
-      width: 0;
-      height: 2px;
-      background: #bb86fc;
-      transition: width 0.3s;
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-    }
-
-    nav a:hover {
-      color: #ffffff;
-    }
-
-    nav a:hover::after {
-      width: 100%;
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 3rem;
+      max-width: 1200px;
+      margin: auto;
     }
 
     section {
-      padding: 3rem 1.5rem;
-      max-width: 900px;
-      margin: auto;
-      animation: fadeIn 1s ease-in-out;
-    }
-
-    .card {
       background: rgba(42, 0, 85, 0.85);
       border-radius: 15px;
       padding: 2rem;
-      margin-bottom: 2rem;
       box-shadow: 0 0 25px rgba(187, 134, 252, 0.4);
       backdrop-filter: blur(10px);
       animation: fadeInCard 1s ease forwards;
-    }
-
-    .card:nth-child(even) {
-      animation-delay: 0.2s;
-    }
-
-    .card:nth-child(odd) {
-      animation-delay: 0.4s;
     }
 
     @keyframes fadeInCard {
@@ -128,14 +87,14 @@
       100% { opacity: 1; transform: scale(1); }
     }
 
-    .card h2 {
+    section h2 {
       color: #bb86fc;
       margin-bottom: 1rem;
       display: flex;
       align-items: center;
     }
 
-    .card h2 i {
+    section h2 i {
       margin-right: 0.5rem;
     }
 
@@ -191,11 +150,6 @@
       color: #bb86fc;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     @keyframes float {
       0% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
@@ -208,45 +162,42 @@
 
   <header>
     <h1><i class="fas fa-robot fa-icon"></i>HLAXHO</h1>
-    <nav>
-      <a href="#roles">Roles</a>
-      <a href="#precios">Precios</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
   </header>
 
-  <section class="card" id="roles">
-    <h2><i class="fas fa-crown"></i> Roles VIP</h2>
-    <p>Accede a scripts OP, atención personalizada y más en nuestro servidor de Discord.</p>
-  </section>
+  <main>
+    <section id="roles">
+      <h2><i class="fas fa-crown"></i> Roles VIP</h2>
+      <p>Accede a scripts OP, atención personalizada y más en nuestro servidor de Discord.</p>
+    </section>
 
-  <section class="card" id="precios">
-    <h2><i class="fas fa-coins"></i> Precios</h2>
-    <ul>
-      <li>VIP - 75 Robux</li>
-      <li>VIP Plus - 225 Robux</li>
-      <li>Super VIP - 325 Robux</li>
-    </ul>
-  </section>
+    <section id="precios">
+      <h2><i class="fas fa-coins"></i> Precios</h2>
+      <ul>
+        <li>VIP - 75 Robux</li>
+        <li>VIP Plus - 225 Robux</li>
+        <li>Super VIP - 325 Robux</li>
+      </ul>
+    </section>
 
-  <section class="card" id="contacto">
-    <h2><i class="fas fa-envelope"></i> Soporte / Contacto</h2>
-    <p>Únete a nuestro Discord: <a style="color:#d7aaff;" href="https://discord.gg/ekFJbgzMqN" target="_blank">discord.gg/ekFJbgzMqN</a></p>
-    <p>O escríbenos por correo: <a style="color:#d7aaff;" href="mailto:hlxhspprt@gmail.com">hlxhspprt@gmail.com</a></p>
-    <br>
-    <a class="button" href="https://discord.gg/ekFJbgzMqN" target="_blank">Entrar al Servidor</a>
-  </section>
+    <section id="contacto">
+      <h2><i class="fas fa-envelope"></i> Soporte / Contacto</h2>
+      <p>Únete a nuestro Discord: <a style="color:#d7aaff;" href="https://discord.gg/ekFJbgzMqN" target="_blank">discord.gg/ekFJbgzMqN</a></p>
+      <p>O escríbenos por correo: <a style="color:#d7aaff;" href="mailto:hlxhspprt@gmail.com">hlxhspprt@gmail.com</a></p>
+      <br>
+      <a class="button" href="https://discord.gg/ekFJbgzMqN" target="_blank">Entrar al Servidor</a>
+    </section>
 
-  <section class="card" id="ticket">
-    <h2><i class="fas fa-ticket-alt"></i> Crear Ticket</h2>
-    <p>¿Tienes un problema o duda? Envíanos un mensaje y te responderemos lo antes posible:</p>
-    <form onsubmit="event.preventDefault(); alert('¡Ticket enviado! Nos pondremos en contacto pronto.');">
-      <input type="text" placeholder="Tu nombre o usuario de Discord" required />
-      <input type="email" placeholder="Tu correo (opcional)" />
-      <textarea placeholder="Escribe aquí tu mensaje..." rows="5" required></textarea>
-      <button type="submit" class="button">Enviar Ticket</button>
-    </form>
-  </section>
+    <section id="ticket">
+      <h2><i class="fas fa-ticket-alt"></i> Crear Ticket</h2>
+      <p>¿Tienes un problema o duda? Envíanos un mensaje y te responderemos lo antes posible:</p>
+      <form onsubmit="event.preventDefault(); alert('¡Ticket enviado! Nos pondremos en contacto pronto.');">
+        <input type="text" placeholder="Tu nombre o usuario de Discord" required />
+        <input type="email" placeholder="Tu correo (opcional)" />
+        <textarea placeholder="Escribe aquí tu mensaje..." rows="5" required></textarea>
+        <button type="submit" class="button">Enviar Ticket</button>
+      </form>
+    </section>
+  </main>
 
   <footer>
     <p>Diseñado con 💜 por HLAXHO</p>
