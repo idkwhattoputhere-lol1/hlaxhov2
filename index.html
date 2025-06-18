@@ -29,8 +29,17 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(135deg, rgba(31,0,54,0.7), rgba(78,20,140,0.8));
-      z-index: -1;
+      z-index: -2;
       animation: backgroundShift 30s ease infinite;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
     }
 
     @keyframes backgroundShift {
@@ -61,13 +70,30 @@
     nav a {
       margin: 0 1rem;
       text-decoration: none;
-      color: #ffffffcc;
+      color: #d7aaff;
       font-weight: bold;
       transition: 0.3s;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: #bb86fc;
+      transition: width 0.3s;
+      position: absolute;
+      bottom: -5px;
+      left: 0;
     }
 
     nav a:hover {
       color: #ffffff;
+    }
+
+    nav a:hover::after {
+      width: 100%;
     }
 
     section {
@@ -89,6 +115,17 @@
     .card h2 {
       color: #bb86fc;
       margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .card h2 i {
+      margin-right: 0.5rem;
+    }
+
+    ul li {
+      margin-left: 1.2rem;
+      line-height: 1.6;
     }
 
     .button {
@@ -112,6 +149,9 @@
       padding: 2rem;
       font-size: 0.9rem;
       color: #ccc;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+      margin-top: 3rem;
     }
 
     form {
@@ -132,7 +172,6 @@
     }
 
     .fa-icon {
-      margin-right: 0.5rem;
       color: #bb86fc;
     }
 
@@ -149,6 +188,8 @@
   </style>
 </head>
 <body>
+  <div id="particles-js"></div>
+
   <header>
     <h1><i class="fas fa-robot fa-icon"></i>HLAXHO</h1>
     <nav>
@@ -159,12 +200,12 @@
   </header>
 
   <section class="card" id="roles">
-    <h2><i class="fas fa-crown fa-icon"></i> Roles VIP</h2>
+    <h2><i class="fas fa-crown"></i> Roles VIP</h2>
     <p>Accede a scripts OP, atención personalizada y más en nuestro servidor de Discord.</p>
   </section>
 
   <section class="card" id="precios">
-    <h2><i class="fas fa-coins fa-icon"></i> Precios</h2>
+    <h2><i class="fas fa-coins"></i> Precios</h2>
     <ul>
       <li>VIP - 75 Robux</li>
       <li>VIP Plus - 225 Robux</li>
@@ -173,15 +214,15 @@
   </section>
 
   <section class="card" id="contacto">
-    <h2><i class="fas fa-envelope fa-icon"></i> Soporte / Contacto</h2>
-    <p>Únete a nuestro Discord: <a href="https://discord.gg/ekFJbgzMqN" target="_blank">discord.gg/ekFJbgzMqN</a></p>
-    <p>O escríbenos por correo: <a href="mailto:hlxhspprt@gmail.com">hlxhspprt@gmail.com</a></p>
+    <h2><i class="fas fa-envelope"></i> Soporte / Contacto</h2>
+    <p>Únete a nuestro Discord: <a style="color:#d7aaff;" href="https://discord.gg/ekFJbgzMqN" target="_blank">discord.gg/ekFJbgzMqN</a></p>
+    <p>O escríbenos por correo: <a style="color:#d7aaff;" href="mailto:hlxhspprt@gmail.com">hlxhspprt@gmail.com</a></p>
     <br>
     <a class="button" href="https://discord.gg/ekFJbgzMqN" target="_blank">Entrar al Servidor</a>
   </section>
 
   <section class="card" id="ticket">
-    <h2><i class="fas fa-ticket-alt fa-icon"></i> Crear Ticket</h2>
+    <h2><i class="fas fa-ticket-alt"></i> Crear Ticket</h2>
     <p>¿Tienes un problema o duda? Envíanos un mensaje y te responderemos lo antes posible:</p>
     <form onsubmit="event.preventDefault(); alert('¡Ticket enviado! Nos pondremos en contacto pronto.');">
       <input type="text" placeholder="Tu nombre o usuario de Discord" required />
@@ -192,15 +233,46 @@
   </section>
 
   <footer>
-    © 2025 HLAXHO. Todos los derechos reservados.
+    <p>Diseñado con 💜 por HLAXHO</p>
+    <p>© 2025 HLAXHO. Todos los derechos reservados.</p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 100 },
+        color: { value: '#bb86fc' },
+        shape: { type: 'circle' },
+        opacity: { value: 0.6 },
+        size: { value: 3 },
+        line_linked: {
+          enable: true,
+          distance: 150,
+          color: '#bb86fc',
+          opacity: 0.4,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 2,
+          direction: 'none',
+          out_mode: 'bounce'
+        }
+      },
+      interactivity: {
+        events: {
+          onhover: { enable: true, mode: 'grab' },
+          onclick: { enable: true, mode: 'push' }
+        },
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 1 } },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+  </script>
 </body>
 </html>
-
-
-  <footer>
-    © 2025 HLAXHO. Todos los derechos reservados.
-  </footer>
-</body>
-</html>
-Actualización diseño
+Actualización realizada
