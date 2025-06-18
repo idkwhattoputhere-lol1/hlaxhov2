@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
   <style>
     * {
       margin: 0;
@@ -22,16 +23,15 @@
       overflow-x: hidden;
     }
 
-    body::before {
-      content: '';
+    #video-bg {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(31,0,54,0.7), rgba(78,20,140,0.8));
-      z-index: -2;
-      animation: backgroundShift 30s ease infinite;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -3;
+      object-fit: cover;
+      filter: brightness(0.3);
     }
 
     #particles-js {
@@ -40,13 +40,7 @@
       height: 100%;
       top: 0;
       left: 0;
-      z-index: -1;
-    }
-
-    @keyframes backgroundShift {
-      0% { background-position: 0 0; }
-      50% { background-position: 100% 100%; }
-      100% { background-position: 0 0; }
+      z-index: -2;
     }
 
     header {
@@ -158,12 +152,27 @@
   </style>
 </head>
 <body>
+
+  <!-- VIDEO DE FONDO -->
+  <video autoplay muted loop id="video-bg">
+    <source src="https://cdn.pixabay.com/video/2023/07/05/175957-841320653_large.mp4" type="video/mp4">
+    Tu navegador no soporta el video.
+  </video>
+
+  <!-- PARTICULAS -->
   <div id="particles-js"></div>
 
+  <!-- MUSICA -->
+  <audio autoplay loop hidden>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/28/audio_f16ac1f437.mp3?filename=future-glitch-ambient-110280.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- CABECERA -->
   <header>
     <h1><i class="fas fa-robot fa-icon"></i>HLAXHO</h1>
   </header>
 
+  <!-- CONTENIDO -->
   <main>
     <section id="roles">
       <h2><i class="fas fa-crown"></i> Roles VIP</h2>
@@ -199,11 +208,13 @@
     </section>
   </main>
 
+  <!-- PIE DE PÁGINA -->
   <footer>
     <p>Diseñado con 💜 por HLAXHO</p>
     <p>© 2025 HLAXHO. Todos los derechos reservados.</p>
   </footer>
 
+  <!-- SCRIPT PARTICULAS -->
   <script>
     particlesJS('particles-js', {
       particles: {
@@ -237,6 +248,16 @@
         }
       },
       retina_detect: true
+    });
+
+    // Animaciones con scroll
+    ScrollReveal().reveal('section', {
+      delay: 300,
+      distance: '40px',
+      origin: 'bottom',
+      duration: 800,
+      easing: 'ease-in-out',
+      reset: false
     });
   </script>
 </body>
