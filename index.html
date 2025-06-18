@@ -1,140 +1,173 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HLAXHO - Servidor de Scripts</title>
+  <title>HLAXHO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Roboto&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
   <style>
-    body {
+    * {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #3a0061, #6a0dad);
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url('https://www.transparenttextures.com/patterns/stardust.png') repeat, linear-gradient(135deg, #1f0036, #4e148c);
       color: white;
       overflow-x: hidden;
     }
 
     header {
+      padding: 2rem;
       text-align: center;
-      padding: 2rem 1rem;
-      font-size: 2.5rem;
-      font-weight: bold;
-      position: relative;
+      background-color: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+    }
+
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3rem;
+      color: #bb86fc;
+      animation: float 4s ease-in-out infinite;
     }
 
     nav {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
+      margin-top: 1rem;
     }
 
     nav a {
-      color: white;
+      margin: 0 1rem;
       text-decoration: none;
-      font-weight: bold;
-      padding: 0.5rem 1rem;
-      border: 2px solid white;
-      border-radius: 5px;
-      transition: background 0.3s;
+      color: #ffffffaa;
+      transition: 0.3s;
     }
 
     nav a:hover {
-      background: white;
-      color: #6a0dad;
+      color: #ffffff;
     }
 
     section {
-      padding: 2rem 1rem;
-      text-align: center;
+      padding: 3rem 1.5rem;
+      max-width: 900px;
+      margin: auto;
+      animation: fadeIn 1s ease-in-out;
     }
 
-    .discord-btn {
-      background: white;
-      color: #6a0dad;
-      font-weight: bold;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.2rem;
-      text-decoration: none;
+    .card {
+      background-color: #2a0055;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 15px rgba(187, 134, 252, 0.3);
+    }
+
+    .card h2 {
+      color: #bb86fc;
+      margin-bottom: 1rem;
+    }
+
+    .button {
       display: inline-block;
-      margin-top: 1rem;
-      transition: transform 0.3s;
+      background: #bb86fc;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
     }
 
-    .discord-btn:hover {
-      transform: scale(1.05);
+    .button:hover {
+      background: #a15de3;
     }
 
     footer {
       text-align: center;
-      padding: 1rem;
+      padding: 2rem;
       font-size: 0.9rem;
-      background: rgba(255, 255, 255, 0.1);
+      color: #ccc;
     }
 
-    /* Animaciones con el mouse */
-    body::before {
-      content: '';
-      position: fixed;
-      top: var(--mouseY, 0);
-      left: var(--mouseX, 0);
-      width: 100px;
-      height: 100px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: top 0.1s, left 0.1s;
-      z-index: 0;
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
     }
 
-    section, header, nav, footer {
-      position: relative;
-      z-index: 1;
+    input, textarea {
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    .fa-icon {
+      margin-right: 0.5rem;
+      color: #bb86fc;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
     }
   </style>
 </head>
 <body>
-  <header>HLAXHO</header>
+  <header>
+    <h1><i class="fas fa-robot fa-icon"></i>HLAXHO</h1>
+    <nav>
+      <a href="#roles">Roles</a>
+      <a href="#precios">Precios</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
 
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#roles">Roles y Precios</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-
-  <section id="inicio">
-    <h2>Bienvenido a HLAXHO</h2>
-    <p>Servidor dedicado a scripts exclusivos, soporte rápido y comunidad activa.</p>
-    <a class="discord-btn" href="https://discord.gg/ekFJbgzMqN" target="_blank">Entrar a Discord</a>
+  <section class="card" id="roles">
+    <h2><i class="fas fa-crown fa-icon"></i> Roles VIP</h2>
+    <p>Accede a scripts OP, atención personalizada y más en nuestro servidor de Discord.</p>
   </section>
 
-  <section id="roles">
-    <h2>Roles y Precios</h2>
-    <p><strong>VIP:</strong> 75 Robux o monedas<br>
-       <strong>VIP Plus:</strong> 225 Robux o monedas<br>
-       <strong>Super VIP:</strong> 325 Robux o monedas<br>
-       Todos los roles incluyen scripts OP y atención personalizada.</p>
+  <section class="card" id="precios">
+    <h2><i class="fas fa-coins fa-icon"></i> Precios</h2>
+    <ul>
+      <li>VIP - 75 Robux</li>
+      <li>VIP Plus - 225 Robux</li>
+      <li>Super VIP - 325 Robux</li>
+    </ul>
   </section>
 
-  <section id="contacto">
-    <h2>Contacto / Soporte</h2>
-    <p>¿Tienes dudas o necesitas ayuda? Puedes contactarnos a través de:</p>
-    <p>📧 <strong>Email:</strong> <a href="mailto:hlxhspprt@gmail.com" style="color: white;">hlxhspprt@gmail.com</a><br>
-       💬 <strong>Servidor Discord:</strong> <a href="https://discord.gg/ekFJbgzMqN" style="color: white;" target="_blank">https://discord.gg/ekFJbgzMqN</a></p>
+  <section class="card" id="contacto">
+    <h2><i class="fas fa-envelope fa-icon"></i> Soporte / Contacto</h2>
+    <p>Únete a nuestro Discord: <a href="https://discord.gg/ekFJbgzMqN" target="_blank">discord.gg/ekFJbgzMqN</a></p>
+    <p>O escríbenos por correo: <a href="mailto:hlxhspprt@gmail.com">hlxhspprt@gmail.com</a></p>
+    <br>
+    <a class="button" href="https://discord.gg/ekFJbgzMqN" target="_blank">Entrar al Servidor</a>
+  </section>
+
+  <section class="card" id="ticket">
+    <h2><i class="fas fa-ticket-alt fa-icon"></i> Crear Ticket</h2>
+    <p>¿Tienes un problema o duda? Envíanos un mensaje y te responderemos lo antes posible:</p>
+    <form onsubmit="event.preventDefault(); alert('¡Ticket enviado! Nos pondremos en contacto pronto.');">
+      <input type="text" placeholder="Tu nombre o usuario de Discord" required />
+      <input type="email" placeholder="Tu correo (opcional)" />
+      <textarea placeholder="Escribe aquí tu mensaje..." rows="5" required></textarea>
+      <button type="submit" class="button">Enviar Ticket</button>
+    </form>
   </section>
 
   <footer>
-    &copy; 2025 HLAXHO - Todos los derechos reservados.
+    © 2025 HLAXHO. Todos los derechos reservados.
   </footer>
-
-  <script>
-    document.addEventListener('mousemove', (e) => {
-      document.body.style.setProperty('--mouseX', e.clientX + 'px');
-      document.body.style.setProperty('--mouseY', e.clientY + 'px');
-    });
-  </script>
 </body>
 </html>
