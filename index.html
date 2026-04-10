@@ -3,250 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HLAXHO | Ingeniería de Precisión</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>HLAXHO | Élite Scripting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --gold: #d4af37;
-            --gold-dark: #aa8a2e;
-            --gold-glow: rgba(212, 175, 55, 0.2);
             --black: #050505;
-            --gray-deep: #0f0f0f;
+            --gray: #0f0f0f;
             --font-logo: 'Cinzel', serif;
-            --font-main: 'Inter', sans-serif;
-            --transition-smooth: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
-        body { background-color: var(--black); color: white; font-family: var(--font-main); overflow-x: hidden; }
+        body { background-color: var(--black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* --- CURSOR PERSONALIZADO --- */
+        /* Cursor Personalizado */
         #cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); }
-        #cursor-blur { position: fixed; width: 40px; height: 40px; border: 1px solid var(--gold-glow); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.2s; transform: translate(-50%, -50%); }
+        #cursor-blur { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.2s; transform: translate(-50%, -50%); }
 
-        /* --- ANIMACIONES DE ENTRADA --- */
-        .reveal { opacity: 0; filter: blur(10px); transform: translateY(30px); transition: var(--transition-smooth); }
-        .reveal.active { opacity: 1; filter: blur(0px); transform: translateY(0); }
+        /* Animaciones de Entrada */
+        .ani-init { opacity: 0; transform: translateY(30px); filter: blur(10px); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        .ani-show { opacity: 1; transform: translateY(0); filter: blur(0px); }
 
-        /* --- NAVBAR --- */
+        /* Navbar */
         nav { 
             position: fixed; top: 0; width: 100%; padding: 30px 6%; 
             display: flex; justify-content: space-between; align-items: center; 
-            z-index: 100; backdrop-filter: blur(10px); 
-            border-bottom: 1px solid rgba(212, 175, 55, 0.05);
-            opacity: 0; animation: fadeInNav 1.5s forwards 0.5s;
+            z-index: 100; backdrop-filter: blur(10px); opacity: 0; animation: fadeIn 1s forwards;
         }
-        @keyframes fadeInNav { to { opacity: 1; } }
-        .logo { font-family: var(--font-logo); font-size: 1.6rem; letter-spacing: 6px; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow); }
-        
+        .logo { font-family: var(--font-logo); font-size: 1.6rem; letter-spacing: 6px; color: var(--gold); }
         .nav-links { display: flex; gap: 40px; align-items: center; }
-        .nav-links a { 
-            text-decoration: none; color: #fff; font-size: 0.75rem; 
-            letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; 
-            opacity: 0.6; font-weight: 300;
-        }
+        .nav-links a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 2px; opacity: 0.6; transition: 0.3s; }
         .nav-links a:hover { opacity: 1; color: var(--gold); }
-        .btn-contact { border: 1px solid var(--gold); padding: 10px 25px; color: var(--gold) !important; opacity: 1 !important; }
+        .btn-discord { border: 1px solid var(--gold); padding: 10px 20px; color: var(--gold) !important; opacity: 1 !important; font-weight: 600; }
 
-        /* --- HERO SECTION --- */
-        .hero { 
-            height: 100vh; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; text-align: center;
-            background: radial-gradient(circle at center, #111 0%, var(--black) 100%);
-        }
-        .hero-title { 
-            font-family: var(--font-logo); font-size: clamp(3rem, 10vw, 8rem); 
-            letter-spacing: 20px; color: #fff; margin-bottom: 15px;
-            opacity: 0; transform: scale(0.8); animation: heroIn 2s forwards 1s;
-        }
-        @keyframes heroIn { to { opacity: 1; transform: scale(1); } }
-
-        .line-container { 
-            display: flex; align-items: center; gap: 20px; width: 100%; justify-content: center;
-            opacity: 0; animation: fadeIn 2s forwards 2s;
-        }
-        .line { height: 1px; width: 100px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
-        .hero-subtitle { font-size: 0.8rem; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; }
-
-        .hero-btns { 
-            margin-top: 50px; display: flex; gap: 25px; 
-            opacity: 0; animation: fadeIn 1.5s forwards 2.5s;
-        }
-        @keyframes fadeIn { to { opacity: 1; } }
+        /* Hero */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero-title { font-family: var(--font-logo); font-size: clamp(3.5rem, 10vw, 8rem); letter-spacing: 20px; margin-bottom: 20px; }
+        .line-box { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
+        .line { height: 1px; width: 80px; background: var(--gold); opacity: 0.5; }
 
         .btn-lux { 
-            padding: 18px 40px; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 15px 35px; border: 1px solid rgba(255,255,255,0.1); 
             background: transparent; color: #fff; text-decoration: none; 
-            font-size: 0.7rem; letter-spacing: 3px; transition: 0.4s;
+            font-size: 0.7rem; letter-spacing: 3px; transition: 0.4s; display: inline-block;
         }
-        .btn-lux:hover { border-color: var(--gold); background: rgba(212,175,55,0.05); box-shadow: 0 0 20px var(--gold-glow); }
+        .btn-lux:hover { border-color: var(--gold); background: rgba(212,175,55,0.05); box-shadow: 0 0 20px rgba(212,175,55,0.1); }
 
-        /* --- FILOSOFÍA --- */
-        .philosophy { padding: 120px 15%; text-align: center; background: var(--gray-deep); }
-        .philosophy p { font-family: var(--font-logo); font-size: 1.5rem; line-height: 2; color: #eee; font-style: italic; }
-
-        /* --- PLANES --- */
-        .plans { padding: 100px 8%; }
-        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .p-card { 
-            background: rgba(10,10,10,0.8); border: 1px solid #1a1a1a; padding: 50px 30px; 
-            transition: 0.5s; text-align: center; position: relative;
-        }
+        /* Secciones */
+        section { padding: 120px 10%; }
+        .philosophy { background: #080808; text-align: center; font-family: var(--font-logo); font-size: 1.3rem; line-height: 2; font-style: italic; border-top: 1px solid #111; border-bottom: 1px solid #111; }
+        
+        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 50px 30px; text-align: center; transition: 0.5s; }
         .p-card:hover { border-color: var(--gold); transform: translateY(-10px); }
-        .p-card h3 { font-family: var(--font-logo); font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 3px; }
-        .price { font-size: 3rem; font-weight: 700; margin-bottom: 30px; }
+        .p-card h3 { font-family: var(--font-logo); letter-spacing: 3px; margin-bottom: 15px; }
 
-        /* --- NOTIFICACIONES --- */
-        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10001; }
-        .notification { background: #111; border-left: 3px solid var(--gold); padding: 20px; margin-bottom: 10px; animation: slideIn 0.5s forwards; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        /* Notificaciones */
+        #notif { position: fixed; top: 20px; right: 20px; z-index: 10001; }
+        .n-box { background: #111; border-left: 3px solid var(--gold); padding: 20px; margin-bottom: 10px; animation: slideIn 0.5s forwards; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+
+        @keyframes fadeIn { to { opacity: 1; } }
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
         .hidden { display: none !important; }
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
-        .modal-content { background: #0a0a0a; padding: 50px; border: 1px solid var(--gold); width: 400px; text-align: center; }
-        input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #222; color: white; outline: none; }
     </style>
 </head>
 <body>
 
     <div id="cursor"></div>
     <div id="cursor-blur"></div>
-    <div id="notification-container"></div>
-
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h2 style="font-family:var(--font-logo); margin-bottom:20px;">ACCESO</h2>
-            <input type="text" id="loginUser" placeholder="USUARIO">
-            <input type="password" id="loginPass" placeholder="CONTRASEÑA">
-            <button class="btn-lux" style="width:100%; margin-top:20px;" onclick="auth.login()">ENTRAR</button>
-            <p onclick="ui.toggleModals()" style="color:var(--gold); cursor:pointer !important; margin-top:20px; font-size:0.7rem;">CREAR CUENTA</p>
-        </div>
-    </div>
+    <div id="notif"></div>
 
     <nav>
         <div class="logo">HLAXHO</div>
         <div class="nav-links">
             <a href="#philosophy">Filosofía</a>
-            <a href="#plans">Productos</a>
-            <div id="guest-nav">
-                <a href="#" onclick="ui.showModal('loginModal')">Cuenta</a>
-            </div>
-            <div id="user-nav" class="hidden">
-                <span id="welcome-msg" style="color:var(--gold); font-size:0.7rem;"></span>
-                <a href="#" onclick="auth.logout()" style="margin-left:15px; color:#ff4444 !important;">SALIR</a>
-            </div>
-            <a href="#" class="btn-contact">CONTACTO</a>
+            <a href="#productos">Productos</a>
+            <div id="guest-nav"><a href="#" onclick="showM()">Cuenta</a></div>
+            <div id="user-nav" class="hidden"><span id="u-name" style="color:var(--gold); font-size: 0.7rem; font-weight: 600;"></span></div>
+            <a href="https://discord.gg/6ujUb59DTa" target="_blank" class="btn-discord">CONTACTO</a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1 class="hero-title">HLAXHO</h1>
-        <div class="line-container">
+        <h1 class="hero-title ani-init">HLAXHO</h1>
+        <div class="line-box ani-init">
             <div class="line"></div>
-            <p class="hero-subtitle">Scripting de élite. Poder sin límites.</p>
+            <p style="letter-spacing: 5px; font-size: 0.8rem; color: var(--gold);">INGENIERÍA DE PRECISIÓN</p>
             <div class="line"></div>
         </div>
-        <div class="hero-btns">
-            <a href="#plans" class="btn-lux">VER PRODUCTOS</a>
-            <a href="#philosophy" class="btn-lux">CONÓCENOS</a>
+        <div class="ani-init">
+            <a href="#productos" class="btn-lux">EXPLORAR PRODUCTOS</a>
         </div>
     </header>
 
-    <section class="philosophy reveal" id="philosophy">
-        <p>"No vendemos herramientas, vendemos ventaja competitiva. En HLAXHO, cada línea de código está diseñada para la perfección, rompiendo los límites de lo convencional."</p>
+    <section class="philosophy ani-init" id="philosophy">
+        <p>"En HLAXHO, el código no es solo lógica, es arte. Creamos la ventaja competitiva que otros solo pueden soñar."</p>
     </section>
 
-    <section class="plans" id="plans">
+    <section id="productos">
+        <h2 class="ani-init" style="text-align:center; font-family:var(--font-logo); letter-spacing:8px; margin-bottom:60px;">COLECCIÓN PREMIUM</h2>
         <div class="premium-grid">
-            <div class="p-card reveal">
-                <span style="color:var(--gold); font-size:0.7rem; letter-spacing:2px;">TIER I</span>
-                <h3>VIP</h3>
-                <div class="price">$19</div>
-                <button class="btn-lux" style="width:100%" onclick="shop.buy('VIP')">COMPRAR ACCESO</button>
+            <div class="p-card ani-init">
+                <span style="color:var(--gold); font-size:0.6rem; letter-spacing:2px;">NIVEL I</span>
+                <h3 style="margin-top:10px;">VIP</h3>
+                <div style="font-size:3rem; margin:25px 0; font-weight:700;">$19</div>
+                <button class="btn-lux" style="width:100%" onclick="buy('VIP')">ADQUIRIR</button>
             </div>
-            <div class="p-card reveal" style="border-color:var(--gold)">
-                <span style="color:var(--gold); font-size:0.7rem; letter-spacing:2px;">MÁS VENDIDO</span>
-                <h3>VIP PLUS</h3>
-                <div class="price">$45</div>
-                <button class="btn-lux" style="width:100%; background:var(--gold); color:black;" onclick="shop.buy('VIP PLUS')">COMPRAR ACCESO</button>
+            <div class="p-card ani-init" style="border-color:var(--gold); background: radial-gradient(circle at top, #111, #0a0a0a);">
+                <span style="color:var(--gold); font-size:0.6rem; letter-spacing:2px;">MÁS POPULAR</span>
+                <h3 style="margin-top:10px;">VIP PLUS</h3>
+                <div style="font-size:3rem; margin:25px 0; font-weight:700;">$45</div>
+                <button class="btn-lux" style="width:100%; background:var(--gold); color:black; font-weight:700;" onclick="buy('VIP PLUS')">ADQUIRIR</button>
             </div>
-            <div class="p-card reveal">
-                <span style="color:var(--gold); font-size:0.7rem; letter-spacing:2px;">ELITE</span>
-                <h3>SUPER VIP</h3>
-                <div class="price">$89</div>
-                <button class="btn-lux" style="width:100%" onclick="shop.buy('SUPER VIP')">COMPRAR ACCESO</button>
+            <div class="p-card ani-init">
+                <span style="color:var(--gold); font-size:0.6rem; letter-spacing:2px;">NIVEL ELITE</span>
+                <h3 style="margin-top:10px;">SUPER VIP</h3>
+                <div style="font-size:3rem; margin:25px 0; font-weight:700;">$89</div>
+                <button class="btn-lux" style="width:100%" onclick="buy('SUPER VIP')">ADQUIRIR</button>
             </div>
         </div>
     </section>
 
+    <div id="loginModal" class="modal">
+        <div style="background:#0a0a0a; padding:50px; border:1px solid var(--gold); text-align:center; max-width:400px; width:90%;">
+            <h2 style="font-family:var(--font-logo); margin-bottom:20px; color:var(--gold);">ACCESO</h2>
+            <input type="text" id="user" placeholder="NOMBRE DE OPERADOR" style="width:100%; padding:15px; margin-bottom:15px; background:#000; border:1px solid #222; color:#fff; outline:none; font-size:0.8rem;">
+            <button class="btn-lux" style="width:100%" onclick="login()">ESTABLECER SESIÓN</button>
+        </div>
+    </div>
+
     <script>
-        // --- ANIMACIONES DE SCROLL ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
+        // --- ANIMACIÓN DE ENTRADA ESCALONADA ---
+        window.addEventListener('load', () => {
+            const elements = document.querySelectorAll('.ani-init');
+            elements.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('ani-show');
+                }, 250 * index); 
             });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // --- CURSOR ---
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.getElementById('cursor');
-            const blur = document.getElementById('cursor-blur');
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            blur.style.left = e.clientX + 'px';
-            blur.style.top = e.clientY + 'px';
         });
 
-        // --- LÓGICA DE USUARIO ---
-        const auth = {
-            login() {
-                const u = document.getElementById('loginUser').value;
-                if(!u) return;
-                localStorage.setItem('hlaxho_session', u);
+        // --- MOVIMIENTO DEL CURSOR ---
+        document.addEventListener('mousemove', (e) => {
+            document.getElementById('cursor').style.left = e.clientX + 'px';
+            document.getElementById('cursor').style.top = e.clientY + 'px';
+            document.getElementById('cursor-blur').style.left = e.clientX + 'px';
+            document.getElementById('cursor-blur').style.top = e.clientY + 'px';
+        });
+
+        // --- SISTEMA DE CUENTAS ---
+        function showM() { document.getElementById('loginModal').style.display = 'flex'; }
+        
+        function login() {
+            const u = document.getElementById('user').value;
+            if(u) {
+                localStorage.setItem('hlaxho_s', u);
                 location.reload();
-            },
-            logout() { localStorage.removeItem('hlaxho_session'); location.reload(); },
-            check() {
-                const s = localStorage.getItem('hlaxho_session');
-                if(s) {
-                    document.getElementById('guest-nav').classList.add('hidden');
-                    document.getElementById('user-nav').classList.remove('hidden');
-                    document.getElementById('welcome-msg').innerText = `ID: ${s.toUpperCase()}`;
-                }
             }
-        };
+        }
 
-        const shop = {
-            buy(plan) {
-                if(!localStorage.getItem('hlaxho_session')) {
-                    ui.showModal('loginModal');
-                    return;
-                }
-                ui.notify(`ORDEN INICIADA: ${plan}`);
-                setTimeout(() => {
-                    ui.notify(`ÉXITO. Abre un ticket en Discord para tu rol.`);
-                }, 2000);
+        function buy(p) {
+            if(!localStorage.getItem('hlaxho_s')) { 
+                showM(); 
+                return; 
             }
-        };
+            const n = document.createElement('div');
+            n.className = 'n-box';
+            n.innerHTML = `<strong style="color:var(--gold)">ORDEN INICIADA: ${p}</strong><br><p style="font-size:0.7rem; margin-top:5px;">Por favor, contacta vía Discord para validar tu pago.</p>`;
+            document.getElementById('notif').appendChild(n);
+            setTimeout(() => n.remove(), 5000);
+        }
 
-        const ui = {
-            showModal(id) { document.getElementById(id).style.display = 'flex'; },
-            hideModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); },
-            notify(msg) {
-                const n = document.createElement('div');
-                n.className = 'notification';
-                n.innerText = msg;
-                document.getElementById('notification-container').appendChild(n);
-                setTimeout(() => n.remove(), 5000);
-            }
-        };
+        // Persistencia de sesión
+        if(localStorage.getItem('hlaxho_s')) {
+            document.getElementById('guest-nav').classList.add('hidden');
+            document.getElementById('user-nav').classList.remove('hidden');
+            document.getElementById('u-name').innerText = `OPERADOR: ${localStorage.getItem('hlaxho_s').toUpperCase()}`;
+        }
 
-        window.onclick = (e) => { if(e.target.className === 'modal') ui.hideModals(); };
-        auth.check();
+        window.onclick = (e) => { if(e.target.className === 'modal') e.target.style.display = 'none'; };
     </script>
 </body>
 </html>
