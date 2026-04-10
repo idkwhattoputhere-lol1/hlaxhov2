@@ -3,379 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HLAXHO | Elite Scripts & Premium Power</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>HLAXHO | Elite Scripting Syndicate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         :root {
-            --bg-black: #050505;
-            --gold-primary: #D4AF37;
-            --gold-light: #F9E498;
-            --gold-dark: #996515;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border-gold: rgba(212, 175, 55, 0.3);
-            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            --black: #080808;
+            --deep-black: #000000;
+            --gray: #1a1a1a;
+            --text-gray: #888;
+            --success: #28a745;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+        /* --- ESTILOS BASE & CURSOR --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+        body { background-color: var(--black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        #cursor { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); }
+        #cursor-blur { position: fixed; width: 150px; height: 150px; background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); opacity: 0.4; }
 
-        body {
-            background-color: var(--bg-black);
-            color: white;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+        /* --- SISTEMA DE NOTIFICACIONES --- */
+        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10001; }
+        .notification { background: rgba(10, 10, 10, 0.9); border-left: 4px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); backdrop-filter: blur(10px); display: flex; align-items: center; gap: 15px; animation: slideIn 0.5s ease forwards; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* --- Custom Scrollbar --- */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg-black); }
-        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
+        /* --- MODALES (LOGIN/REGISTRO) --- */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-content { background: #111; padding: 40px; border: 1px solid var(--gold); width: 100%; max-width: 400px; text-align: center; }
+        .modal-content h2 { font-family: 'Syncopate', sans-serif; color: var(--gold); margin-bottom: 20px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--gray); color: white; outline: none; }
+        input:focus { border-color: var(--gold); }
 
-        /* --- Background Particles --- */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
+        /* --- NAVBAR --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
+        .logo { font-family: 'Syncopate', sans-serif; font-weight: 700; color: var(--gold); font-size: 1.5rem; }
+        .user-zone { display: flex; gap: 20px; align-items: center; }
 
-        .main-content { position: relative; z-index: 2; }
+        /* --- HERO --- */
+        .hero { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; background: radial-gradient(circle at 50% 50%, #1a1508 0%, var(--deep-black) 100%); }
+        .hero h1 { font-family: 'Syncopate', sans-serif; font-size: clamp(3rem, 10vw, 7rem); background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* --- CARDS --- */
+        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 50px 10%; }
+        .p-card { background: #0f0f0f; border: 1px solid var(--gray); padding: 40px; transition: 0.4s; position: relative; }
+        .p-card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(212,175,55,0.1); }
+        .btn-gold { background: var(--gold); color: black; padding: 15px 30px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 20px; transition: 0.3s; border: 1px solid var(--gold); }
+        .btn-gold:hover { background: transparent; color: var(--gold); }
 
-        /* --- Navigation --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 30px 8%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-weight: 900;
-            font-size: 1.8rem;
-            letter-spacing: 4px;
-            color: var(--gold-primary);
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-        }
-
-        .nav-links a {
-            color: #ccc;
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover { color: var(--gold-light); }
-
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
-        }
-
-        .hero h1 {
-            font-size: clamp(4rem, 10vw, 8rem);
-            font-weight: 900;
-            margin-bottom: 10px;
-            background: linear-gradient(to bottom, #fff 30%, var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3));
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            color: #aaa;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-        }
-
-        .btn-group { display: flex; gap: 20px; }
-
-        .btn {
-            padding: 15px 40px;
-            border-radius: 2px;
-            text-decoration: none;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: var(--gold-primary);
-            color: black;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-        }
-
-        .btn-primary:hover {
-            background: var(--gold-light);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
-        }
-
-        .btn-secondary {
-            border: 1px solid var(--border-gold);
-            color: var(--gold-light);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(212, 175, 55, 0.1);
-            border-color: var(--gold-light);
-        }
-
-        /* --- Sections General --- */
-        section { padding: 100px 10%; }
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--gold-primary);
-            margin-bottom: 15px;
-        }
-        .section-title div {
-            width: 50px;
-            height: 2px;
-            background: var(--gold-primary);
-            margin: 0 auto;
-        }
-
-        /* --- Cards --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--border-gold);
-            padding: 40px;
-            border-radius: 5px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            background: rgba(212, 175, 55, 0.05);
-            border-color: var(--gold-primary);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
-
-        .card i {
-            font-size: 2.5rem;
-            color: var(--gold-primary);
-            margin-bottom: 20px;
-        }
-
-        /* --- Pricing Table --- */
-        .price-card {
-            background: linear-gradient(145deg, #111, #050505);
-            padding: 50px 30px;
-            border: 1px solid var(--border-gold);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .price-card.featured {
-            border-width: 2px;
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.15);
-        }
-
-        .price-card h3 { color: var(--gold-primary); font-size: 1.8rem; margin-bottom: 20px; }
-        .price-card .price { font-size: 3rem; font-weight: 900; margin-bottom: 30px; }
-        .price-card ul { list-style: none; margin-bottom: 40px; color: #888; text-align: left;}
-        .price-card ul li { margin-bottom: 15px; }
-        .price-card ul li i { color: var(--gold-primary); margin-right: 10px; }
-
-        /* --- Footer --- */
-        footer {
-            padding: 50px 10%;
-            border-top: 1px solid var(--border-gold);
-            text-align: center;
-            color: #555;
-        }
-
-        .social-links { margin-bottom: 20px; }
-        .social-links a { color: var(--gold-primary); font-size: 1.5rem; margin: 0 15px; transition: 0.3s; }
-        .social-links a:hover { color: white; filter: drop-shadow(0 0 5px var(--gold-primary)); }
-
-        /* --- CTA Section --- */
-        .cta {
-            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070') center/cover;
-            padding: 100px 20px;
-            text-align: center;
-            border-top: 1px solid var(--border-gold);
-            border-bottom: 1px solid var(--border-gold);
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3.5rem; }
-            .price-card.featured { transform: scale(1); }
-            .nav-links { display: none; }
-        }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div id="particles-js"></div>
+    <div id="notification-container"></div>
+    <div id="cursor"></div>
+    <div id="cursor-blur"></div>
 
-    <div class="main-content">
-        <nav>
-            <div class="logo">HLAXHO</div>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#scripts">Scripts</a>
-                <a href="#pricing">Premium</a>
-                <a href="https://discord.gg/hlaxho"><i class="fab fa-discord"></i> Community</a>
-            </div>
-        </nav>
-
-        <header class="hero">
-            <h1 data-aos="zoom-out" data-aos-duration="1500">HLAXHO</h1>
-            <p data-aos="fade-up" data-aos-delay="500">Elite Scripts. Premium Power.</p>
-            <div class="btn-group" data-aos="fade-up" data-aos-delay="800">
-                <a href="#pricing" class="btn btn-primary">Get Access</a>
-                <a href="#scripts" class="btn btn-secondary">View Plans</a>
-            </div>
-        </header>
-
-        <section id="about">
-            <div class="section-title" data-aos="fade-up">
-                <h2>The Standard of Excellence</h2>
-                <div></div>
-            </div>
-            <div class="grid">
-                <div class="card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Optimized Performance</h3>
-                    <p>Clean code written for maximum efficiency and zero latency.</p>
-                </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-shield-halved"></i>
-                    <h3>Secure & Private</h3>
-                    <p>Encrypted tools designed to protect your identity and advantage.</p>
-                </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="300">
-                    <i class="fas fa-sync"></i>
-                    <h3>Daily Updates</h3>
-                    <p>Always ahead. We update our repository to match the latest standards.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="pricing" style="background: rgba(212, 175, 55, 0.02);">
-            <div class="section-title" data-aos="fade-up">
-                <h2>Premium Membership</h2>
-                <div></div>
-            </div>
-            <div class="grid">
-                <div class="price-card card" data-aos="flip-left" data-aos-delay="100">
-                    <h3>VIP</h3>
-                    <div class="price">$19.99</div>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Basic Script Access</li>
-                        <li><i class="fas fa-check"></i> Community Role</li>
-                        <li><i class="fas fa-check"></i> Standard Support</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary">Select Plan</a>
-                </div>
-                <div class="price-card card featured" data-aos="flip-left" data-aos-delay="200">
-                    <div style="position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--gold-primary); color:black; padding:5px 15px; font-size:0.7rem; font-weight:bold; border-radius:20px;">MOST POPULAR</div>
-                    <h3>VIP PLUS</h3>
-                    <div class="price">$39.99</div>
-                    <ul>
-                        <li><i class="fas fa-check"></i> All VIP Features</li>
-                        <li><i class="fas fa-check"></i> Exclusive Scripts</li>
-                        <li><i class="fas fa-check"></i> Early Access</li>
-                        <li><i class="fas fa-check"></i> Private Discord Canal</li>
-                    </ul>
-                    <a href="#" class="btn btn-primary">Select Plan</a>
-                </div>
-                <div class="price-card card" data-aos="flip-left" data-aos-delay="300">
-                    <h3>SUPER VIP</h3>
-                    <div class="price">$89.99</div>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Full Repository Access</li>
-                        <li><i class="fas fa-check"></i> Experimental Tools</li>
-                        <li><i class="fas fa-check"></i> Priority 1-on-1 Support</li>
-                        <li><i class="fas fa-check"></i> Lifetime Updates</li>
-                    </ul>
-                    <a href="#" class="btn btn-secondary">Select Plan</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta" data-aos="fade-in">
-            <h2 style="font-size: 3rem; margin-bottom: 20px;">READY TO ASCEND?</h2>
-            <p style="margin-bottom: 40px; color: #ccc;">Join the elite 1% of the HLAXHO community today.</p>
-            <a href="#" class="btn btn-primary" style="padding: 20px 60px;">Get Premium Access</a>
-        </section>
-
-        <footer>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-discord"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-            <p>HLAXHO &copy; 2024. All Rights Reserved.</p>
-            <p style="font-size: 0.7rem; margin-top: 10px; letter-spacing: 2px;">LUXURY TECH INTERFACE V1.0</p>
-        </footer>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Acceso</h2>
+            <input type="text" id="loginUser" placeholder="Usuario">
+            <input type="password" id="loginPass" placeholder="Contraseña">
+            <button class="btn-gold" style="width:100%" onclick="auth.login()">Entrar</button>
+            <p style="margin-top:15px; font-size:0.8rem; color:var(--text-gray)">¿No tienes cuenta? <span onclick="ui.toggleModals()" style="color:var(--gold); cursor:pointer !important;">Regístrate</span></p>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <h2>Registro</h2>
+            <input type="text" id="regUser" placeholder="Nuevo Usuario">
+            <input type="password" id="regPass" placeholder="Contraseña">
+            <button class="btn-gold" style="width:100%" onclick="auth.register()">Crear Cuenta</button>
+            <p style="margin-top:15px; font-size:0.8rem; color:var(--text-gray)">¿Ya tienes cuenta? <span onclick="ui.toggleModals()" style="color:var(--gold); cursor:pointer !important;">Inicia Sesión</span></p>
+        </div>
+    </div>
+
+    <nav>
+        <div class="logo">HLAXHO</div>
+        <div class="user-zone">
+            <div id="guest-nav">
+                <a href="#" onclick="ui.showModal('loginModal')" style="color: var(--gold); text-decoration: none; font-size: 0.8rem; letter-spacing: 2px;">INICIAR SESIÓN</a>
+            </div>
+            <div id="user-nav" class="hidden">
+                <span id="welcome-msg" style="color: var(--text-gray); font-size: 0.8rem;"></span>
+                <a href="#" onclick="auth.logout()" style="color: #ff4444; text-decoration: none; font-size: 0.8rem; margin-left: 20px;">SALIR</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1 data-aos="fade-down">HLAXHO</h1>
+        <p style="letter-spacing: 5px; color: var(--gold); margin-top: 10px;">SCRIPTS DE ÉLITE | PODER PREMIUM</p>
+    </header>
+
+    <section id="plans">
+        <div class="premium-grid">
+            <div class="p-card" data-aos="fade-up">
+                <h3>VIP ACCESS</h3>
+                <div style="font-size: 2.5rem; margin: 20px 0;">$19<span style="font-size: 1rem;">/mes</span></div>
+                <ul style="list-style:none; color: var(--text-gray); margin-bottom: 20px;">
+                    <li><i class="fas fa-check"></i> Scripts Básicos</li>
+                    <li><i class="fas fa-check"></i> Soporte Discord</li>
+                </ul>
+                <button class="btn-gold" onclick="shop.buy('VIP')">ADQUIRIR TIER I</button>
+            </div>
+
+            <div class="p-card" style="border-color: var(--gold);" data-aos="fade-up" data-aos-delay="200">
+                <h3 style="color: var(--gold);">SUPER VIP</h3>
+                <div style="font-size: 2.5rem; margin: 20px 0;">$89<span style="font-size: 1rem;">/mes</span></div>
+                <ul style="list-style:none; color: var(--text-gray); margin-bottom: 20px;">
+                    <li><i class="fas fa-check"></i> Acceso Total</li>
+                    <li><i class="fas fa-check"></i> Soporte Prioritario 1:1</li>
+                    <li><i class="fas fa-check"></i> Scripts Personalizados</li>
+                </ul>
+                <button class="btn-gold" onclick="shop.buy('SUPER VIP')">ADQUIRIR ELITE</button>
+            </div>
+        </div>
+    </section>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Init Scroll Animations
-        AOS.init({ duration: 1000, once: true });
+        AOS.init();
 
-        // Particles Configuration
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#D4AF37" },
-                "shape": { "type": "circle" },
-                "opacity": { "value": 0.5, "random": true },
-                "size": { "value": 3, "random": true },
-                "line_linked": { "enable": true, "distance": 150, "color": "#D4AF37", "opacity": 0.2, "width": 1 },
-                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+        // --- SISTEMA DE AUTENTICACIÓN (LÓGICA DE GROK) ---
+        const auth = {
+            register() {
+                const u = document.getElementById('regUser').value;
+                const p = document.getElementById('regPass').value;
+                if(!u || !p) return ui.notify("Completa los campos", "error");
+                
+                localStorage.setItem('hlaxho_user', JSON.stringify({user: u, pass: p}));
+                ui.notify("Cuenta creada con éxito", "gold");
+                ui.toggleModals();
             },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
-                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } } }
+            login() {
+                const u = document.getElementById('loginUser').value;
+                const p = document.getElementById('loginPass').value;
+                const stored = JSON.parse(localStorage.getItem('hlaxho_user'));
+
+                if(stored && stored.user === u && stored.pass === p) {
+                    localStorage.setItem('hlaxho_session', u);
+                    ui.notify(`Bienvenido, ${u}`, "gold");
+                    location.reload();
+                } else {
+                    ui.notify("Credenciales incorrectas", "error");
+                }
             },
-            "retina_detect": true
+            logout() {
+                localStorage.removeItem('hlaxho_session');
+                location.reload();
+            },
+            checkSession() {
+                const session = localStorage.getItem('hlaxho_session');
+                if(session) {
+                    document.getElementById('guest-nav').classList.add('hidden');
+                    document.getElementById('user-nav').classList.remove('hidden');
+                    document.getElementById('welcome-msg').innerText = `OPERADOR: ${session.toUpperCase()}`;
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        // --- SISTEMA DE TIENDA & NOTIFICACIONES ---
+        const shop = {
+            buy(plan) {
+                if(!localStorage.getItem('hlaxho_session')) {
+                    ui.showModal('loginModal');
+                    ui.notify("Inicia sesión para comprar", "error");
+                    return;
+                }
+                ui.notify(`PROCESANDO PAGO...`, "gold");
+                setTimeout(() => {
+                    ui.notify(`¡ÉXITO! Has adquirido ${plan}`, "success");
+                    // Aquí iría la integración con Stripe/PayPal
+                }, 2000);
+            }
+        };
+
+        // --- INTERFAZ UI ---
+        const ui = {
+            showModal(id) { document.getElementById(id).style.display = 'flex'; },
+            hideModals() { 
+                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); 
+            },
+            toggleModals() {
+                const l = document.getElementById('loginModal');
+                const r = document.getElementById('registerModal');
+                if(l.style.display === 'flex') { l.style.display = 'none'; r.style.display = 'flex'; }
+                else { l.style.display = 'flex'; r.style.display = 'none'; }
+            },
+            notify(msg, type) {
+                const container = document.getElementById('notification-container');
+                const n = document.createElement('div');
+                n.className = 'notification';
+                n.innerHTML = `<i class="fas fa-shield-alt" style="color:var(--gold)"></i> <span>${msg}</span>`;
+                container.appendChild(n);
+                setTimeout(() => n.remove(), 4000);
+            }
+        };
+
+        // --- CURSOR ---
+        document.addEventListener('mousemove', (e) => {
+            document.getElementById('cursor').style.left = e.clientX + 'px';
+            document.getElementById('cursor').style.top = e.clientY + 'px';
+            document.getElementById('cursor-blur').style.left = e.clientX + 'px';
+            document.getElementById('cursor-blur').style.top = e.clientY + 'px';
         });
+
+        // Cerrar modales al hacer clic fuera
+        window.onclick = (e) => { if(e.target.className === 'modal') ui.hideModals(); };
+
+        // Iniciar
+        auth.checkSession();
     </script>
 </body>
 </html>
