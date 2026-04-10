@@ -3,87 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HLAXHO | Élite Scripting</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
+    <title>HLAXHO | Nexus Elite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --gold: #d4af37;
-            --black: #050505;
-            --gray: #0f0f0f;
+            --gold-bright: #ffdf00;
+            --black: #020202;
+            --card-bg: rgba(15, 15, 15, 0.8);
             --font-logo: 'Cinzel', serif;
         }
 
+        /* --- BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
         body { background-color: var(--black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
         
-        /* Cursor Personalizado */
-        #cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); }
-        #cursor-blur { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(212, 175, 55, 0.2); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.2s; transform: translate(-50%, -50%); }
+        /* Efecto de fondo sutil */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #111 0%, #000 100%);
+            z-index: -1;
+        }
 
-        /* Animaciones de Entrada */
-        .ani-init { opacity: 0; transform: translateY(30px); filter: blur(10px); transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
+        /* Cursor */
+        #cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); box-shadow: 0 0 15px var(--gold); }
+        #cursor-blur { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(212, 175, 55, 0.15); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.2s; transform: translate(-50%, -50%); }
+
+        /* --- ANIMACIONES --- */
+        .ani-init { opacity: 0; transform: translateY(40px); filter: blur(12px); transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .ani-show { opacity: 1; transform: translateY(0); filter: blur(0px); }
 
-        /* Navbar */
+        /* --- NAVBAR --- */
         nav { 
-            position: fixed; top: 0; width: 100%; padding: 30px 6%; 
+            position: fixed; top: 0; width: 100%; padding: 25px 8%; 
             display: flex; justify-content: space-between; align-items: center; 
-            z-index: 100; backdrop-filter: blur(10px); opacity: 0; animation: fadeIn 1s forwards;
+            z-index: 100; backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.03);
         }
-        .logo { font-family: var(--font-logo); font-size: 1.6rem; letter-spacing: 6px; color: var(--gold); }
-        .nav-links { display: flex; gap: 40px; align-items: center; }
-        .nav-links a { text-decoration: none; color: #fff; font-size: 0.75rem; letter-spacing: 2px; opacity: 0.6; transition: 0.3s; }
+        .logo { font-family: var(--font-logo); font-size: 1.8rem; letter-spacing: 8px; color: #fff; font-weight: 700; }
+        .nav-links { display: flex; gap: 35px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #fff; font-size: 0.7rem; letter-spacing: 3px; opacity: 0.5; transition: 0.4s; text-transform: uppercase; }
         .nav-links a:hover { opacity: 1; color: var(--gold); }
-        .btn-discord { border: 1px solid var(--gold); padding: 10px 20px; color: var(--gold) !important; opacity: 1 !important; font-weight: 600; }
+        .btn-discord { border: 1px solid var(--gold); padding: 12px 25px; color: var(--gold) !important; opacity: 1 !important; transition: 0.3s; background: rgba(212, 175, 55, 0.05); }
+        .btn-discord:hover { background: var(--gold); color: black !important; }
 
-        /* Hero */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        .hero-title { font-family: var(--font-logo); font-size: clamp(3.5rem, 10vw, 8rem); letter-spacing: 20px; margin-bottom: 20px; }
-        .line-box { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
-        .line { height: 1px; width: 80px; background: var(--gold); opacity: 0.5; }
+        /* --- HERO --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
+        .hero-title { font-family: var(--font-logo); font-size: clamp(4rem, 12vw, 9rem); letter-spacing: 25px; margin-bottom: 10px; background: linear-gradient(to bottom, #fff 30%, var(--gold) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .line-box { display: flex; align-items: center; gap: 30px; margin-bottom: 50px; }
+        .line { height: 1px; width: 120px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
 
+        /* --- BOTONES --- */
         .btn-lux { 
-            padding: 15px 35px; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 18px 45px; border: 1px solid rgba(255,255,255,0.1); 
             background: transparent; color: #fff; text-decoration: none; 
-            font-size: 0.7rem; letter-spacing: 3px; transition: 0.4s; display: inline-block;
+            font-size: 0.75rem; letter-spacing: 4px; transition: 0.5s; position: relative; overflow: hidden;
         }
-        .btn-lux:hover { border-color: var(--gold); background: rgba(212,175,55,0.05); box-shadow: 0 0 20px rgba(212,175,55,0.1); }
+        .btn-lux:hover { border-color: var(--gold); box-shadow: 0 0 30px rgba(212,175,55,0.15); }
+        .btn-lux:disabled { opacity: 0.5; cursor: not-allowed !important; border-color: #333; color: #666; }
 
-        /* Secciones */
-        section { padding: 120px 10%; }
-        .philosophy { background: #080808; text-align: center; font-family: var(--font-logo); font-size: 1.3rem; line-height: 2; font-style: italic; border-top: 1px solid #111; border-bottom: 1px solid #111; }
+        /* --- NOTIFICACIONES EVOLUCIONADAS --- */
+        #notif-container { position: fixed; bottom: 30px; right: 30px; z-index: 10001; display: flex; flex-direction: column; gap: 15px; }
+        .n-card { 
+            background: rgba(10, 10, 10, 0.9); border: 1px solid rgba(212,175,55,0.3); 
+            backdrop-filter: blur(20px); padding: 25px; min-width: 350px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6); animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            display: flex; gap: 20px; align-items: flex-start;
+        }
+        .n-icon { color: var(--gold); font-size: 1.5rem; animation: pulse 2s infinite; }
+        .n-content h4 { font-family: var(--font-logo); color: var(--gold); letter-spacing: 2px; margin-bottom: 5px; }
+        .n-content p { font-size: 0.8rem; color: #ccc; line-height: 1.4; }
+        .n-btn { display: inline-block; margin-top: 10px; color: #fff; font-size: 0.7rem; text-decoration: underline; letter-spacing: 1px; }
+
+        @keyframes slideIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* --- PRODUCTOS --- */
+        .p-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 80px; }
+        .p-card { 
+            background: var(--card-bg); border: 1px solid #151515; padding: 60px 40px; 
+            text-align: center; transition: 0.6s; position: relative;
+        }
+        .p-card::after { content: ''; position: absolute; inset: 0; border: 1px solid var(--gold); opacity: 0; transition: 0.6s; }
+        .p-card:hover { transform: translateY(-15px); }
+        .p-card:hover::after { opacity: 0.2; }
         
-        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
-        .p-card { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 50px 30px; text-align: center; transition: 0.5s; }
-        .p-card:hover { border-color: var(--gold); transform: translateY(-10px); }
-        .p-card h3 { font-family: var(--font-logo); letter-spacing: 3px; margin-bottom: 15px; }
+        .p-card h3 { font-family: var(--font-logo); letter-spacing: 4px; font-size: 1.8rem; }
+        .price { font-size: 3.5rem; margin: 30px 0; font-weight: 300; font-family: var(--font-logo); }
 
-        /* Notificaciones */
-        #notif { position: fixed; top: 20px; right: 20px; z-index: 10001; }
-        .n-box { background: #111; border-left: 3px solid var(--gold); padding: 20px; margin-bottom: 10px; animation: slideIn 0.5s forwards; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .cooldown-text { font-size: 0.65rem; color: #ff4444; margin-top: 10px; letter-spacing: 1px; display: none; }
 
-        @keyframes fadeIn { to { opacity: 1; } }
-        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-
-        .hidden { display: none !important; }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(20px); }
     </style>
 </head>
 <body>
 
     <div id="cursor"></div>
     <div id="cursor-blur"></div>
-    <div id="notif"></div>
+    <div id="notif-container"></div>
 
     <nav>
         <div class="logo">HLAXHO</div>
         <div class="nav-links">
             <a href="#philosophy">Filosofía</a>
             <a href="#productos">Productos</a>
-            <div id="guest-nav"><a href="#" onclick="showM()">Cuenta</a></div>
-            <div id="user-nav" class="hidden"><span id="u-name" style="color:var(--gold); font-size: 0.7rem; font-weight: 600;"></span></div>
+            <div id="guest-nav"><a href="#" onclick="ui.modal(true)">Cuenta</a></div>
+            <div id="user-nav" class="hidden"><span id="u-name" style="color:var(--gold); font-weight: 600;"></span></div>
             <a href="https://discord.gg/6ujUb59DTa" target="_blank" class="btn-discord">CONTACTO</a>
         </div>
     </nav>
@@ -92,62 +118,58 @@
         <h1 class="hero-title ani-init">HLAXHO</h1>
         <div class="line-box ani-init">
             <div class="line"></div>
-            <p style="letter-spacing: 5px; font-size: 0.8rem; color: var(--gold);">INGENIERÍA DE PRECISIÓN</p>
+            <p style="letter-spacing: 8px; font-size: 0.8rem; color: #fff;">SISTEMAS DE ÉLITE</p>
             <div class="line"></div>
         </div>
         <div class="ani-init">
-            <a href="#productos" class="btn-lux">EXPLORAR PRODUCTOS</a>
+            <a href="#productos" class="btn-lux">ACCEDER AL REPOSITORIO</a>
         </div>
     </header>
 
-    <section class="philosophy ani-init" id="philosophy">
-        <p>"En HLAXHO, el código no es solo lógica, es arte. Creamos la ventaja competitiva que otros solo pueden soñar."</p>
-    </section>
-
-    <section id="productos">
-        <h2 class="ani-init" style="text-align:center; font-family:var(--font-logo); letter-spacing:8px; margin-bottom:60px;">COLECCIÓN PREMIUM</h2>
-        <div class="premium-grid">
+    <section id="productos" style="padding: 150px 10%;">
+        <h2 class="ani-init" style="text-align:center; font-family:var(--font-logo); letter-spacing:10px; margin-bottom:20px;">CATÁLOGO</h2>
+        <p class="ani-init" style="text-align:center; color:var(--gold); font-size:0.7rem; letter-spacing:4px; margin-bottom:80px; text-transform:uppercase;">Selecciona tu nivel de ventaja</p>
+        
+        <div class="p-grid">
             <div class="p-card ani-init">
-                <span style="color:var(--gold); font-size:0.6rem; letter-spacing:2px;">NIVEL I</span>
-                <h3 style="margin-top:10px;">VIP</h3>
-                <div style="font-size:3rem; margin:25px 0; font-weight:700;">$19</div>
-                <button class="btn-lux" style="width:100%" onclick="buy('VIP')">ADQUIRIR</button>
+                <h3>VIP</h3>
+                <div class="price">$19</div>
+                <button class="btn-lux buy-btn" style="width:100%" onclick="shop.process('VIP', this)">ADQUIRIR</button>
+                <p class="cooldown-text">SISTEMA EN RECARGA (60s)</p>
             </div>
-            <div class="p-card ani-init" style="border-color:var(--gold); background: radial-gradient(circle at top, #111, #0a0a0a);">
-                <span style="color:var(--gold); font-size:0.6rem; letter-spacing:2px;">MÁS POPULAR</span>
-                <h3 style="margin-top:10px;">VIP PLUS</h3>
-                <div style="font-size:3rem; margin:25px 0; font-weight:700;">$45</div>
-                <button class="btn-lux" style="width:100%; background:var(--gold); color:black; font-weight:700;" onclick="buy('VIP PLUS')">ADQUIRIR</button>
+            <div class="p-card ani-init" style="border-color: rgba(212,175,55,0.4);">
+                <div style="background:var(--gold); color:black; font-size:0.6rem; padding:4px 15px; position:absolute; top:0; left:50%; transform:translate(-50%, -50%); letter-spacing:2px; font-weight:900;">RECOMENDADO</div>
+                <h3>VIP PLUS</h3>
+                <div class="price">$45</div>
+                <button class="btn-lux buy-btn" style="width:100%; background:var(--gold); color:black;" onclick="shop.process('VIP PLUS', this)">ADQUIRIR</button>
+                <p class="cooldown-text">SISTEMA EN RECARGA (60s)</p>
             </div>
             <div class="p-card ani-init">
-                <span style="color:var(--gold); font-size:0.6rem; letter-spacing:2px;">NIVEL ELITE</span>
-                <h3 style="margin-top:10px;">SUPER VIP</h3>
-                <div style="font-size:3rem; margin:25px 0; font-weight:700;">$89</div>
-                <button class="btn-lux" style="width:100%" onclick="buy('SUPER VIP')">ADQUIRIR</button>
+                <h3>SUPER VIP</h3>
+                <div class="price">$89</div>
+                <button class="btn-lux buy-btn" style="width:100%" onclick="shop.process('SUPER VIP', this)">ADQUIRIR</button>
+                <p class="cooldown-text">SISTEMA EN RECARGA (60s)</p>
             </div>
         </div>
     </section>
 
     <div id="loginModal" class="modal">
-        <div style="background:#0a0a0a; padding:50px; border:1px solid var(--gold); text-align:center; max-width:400px; width:90%;">
-            <h2 style="font-family:var(--font-logo); margin-bottom:20px; color:var(--gold);">ACCESO</h2>
-            <input type="text" id="user" placeholder="NOMBRE DE OPERADOR" style="width:100%; padding:15px; margin-bottom:15px; background:#000; border:1px solid #222; color:#fff; outline:none; font-size:0.8rem;">
-            <button class="btn-lux" style="width:100%" onclick="login()">ESTABLECER SESIÓN</button>
+        <div style="background:#050505; padding:60px; border:1px solid #222; text-align:center; width:450px;">
+            <h2 style="font-family:var(--font-logo); margin-bottom:30px; color:var(--gold); letter-spacing:5px;">IDENTIFICACIÓN</h2>
+            <input type="text" id="user" placeholder="ID DE OPERADOR" style="width:100%; padding:20px; margin-bottom:20px; background:#000; border:1px solid #222; color:#fff; font-family:'Inter'; font-size:0.8rem; outline:none;">
+            <button class="btn-lux" style="width:100%" onclick="auth.login()">VINCULAR CUENTA</button>
         </div>
     </div>
 
     <script>
-        // --- ANIMACIÓN DE ENTRADA ESCALONADA ---
+        // --- ANIMACIÓN ENTRADA ---
         window.addEventListener('load', () => {
-            const elements = document.querySelectorAll('.ani-init');
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('ani-show');
-                }, 250 * index); 
+            document.querySelectorAll('.ani-init').forEach((el, i) => {
+                setTimeout(() => el.classList.add('ani-show'), 200 * i);
             });
         });
 
-        // --- MOVIMIENTO DEL CURSOR ---
+        // --- CURSOR ---
         document.addEventListener('mousemove', (e) => {
             document.getElementById('cursor').style.left = e.clientX + 'px';
             document.getElementById('cursor').style.top = e.clientY + 'px';
@@ -155,37 +177,77 @@
             document.getElementById('cursor-blur').style.top = e.clientY + 'px';
         });
 
-        // --- SISTEMA DE CUENTAS ---
-        function showM() { document.getElementById('loginModal').style.display = 'flex'; }
-        
-        function login() {
-            const u = document.getElementById('user').value;
-            if(u) {
-                localStorage.setItem('hlaxho_s', u);
-                location.reload();
-            }
-        }
+        // --- SISTEMA DE TIENDA CON COOLDOWN ---
+        const shop = {
+            isCooldown: false,
 
-        function buy(p) {
-            if(!localStorage.getItem('hlaxho_s')) { 
-                showM(); 
-                return; 
-            }
-            const n = document.createElement('div');
-            n.className = 'n-box';
-            n.innerHTML = `<strong style="color:var(--gold)">ORDEN INICIADA: ${p}</strong><br><p style="font-size:0.7rem; margin-top:5px;">Por favor, contacta vía Discord para validar tu pago.</p>`;
-            document.getElementById('notif').appendChild(n);
-            setTimeout(() => n.remove(), 5000);
-        }
+            process(plan, btn) {
+                if(!localStorage.getItem('hlaxho_s')) { ui.modal(true); return; }
+                if(this.isCooldown) return;
 
-        // Persistencia de sesión
+                // Iniciar Cooldown
+                this.startCooldown();
+
+                // Notificación Premium
+                this.notify(plan);
+            },
+
+            startCooldown() {
+                this.isCooldown = true;
+                const btns = document.querySelectorAll('.buy-btn');
+                const texts = document.querySelectorAll('.cooldown-text');
+                
+                btns.forEach(b => b.disabled = true);
+                texts.forEach(t => t.style.display = 'block');
+
+                setTimeout(() => {
+                    this.isCooldown = false;
+                    btns.forEach(b => b.disabled = false);
+                    texts.forEach(t => t.style.display = 'none');
+                }, 60000); // 1 minuto
+            },
+
+            notify(plan) {
+                const container = document.getElementById('notif-container');
+                const n = document.createElement('div');
+                n.className = 'n-card';
+                n.innerHTML = `
+                    <div class="n-icon"><i class="fas fa-shield-check"></i></div>
+                    <div class="n-content">
+                        <h4>PEDIDO GENERADO</h4>
+                        <p>Has seleccionado <strong>${plan}</strong>. Para completar la activación, debes <strong>crear un ticket</strong> en nuestro servidor.</p>
+                        <a href="https://discord.gg/6ujUb59DTa" target="_blank" class="n-btn">IR AL DISCORD AHORA →</a>
+                        <br>
+                        <small style="color:var(--gold); font-size:0.6rem; opacity:0.7;">O haz clic en CONTACTO en el menú.</small>
+                    </div>
+                `;
+                container.appendChild(n);
+                setTimeout(() => {
+                    n.style.animation = 'slideIn 0.5s reverse forwards';
+                    setTimeout(() => n.remove(), 500);
+                }, 8000);
+            }
+        };
+
+        // --- AUTENTICACIÓN ---
+        const auth = {
+            login() {
+                const u = document.getElementById('user').value;
+                if(u) { localStorage.setItem('hlaxho_s', u); location.reload(); }
+            }
+        };
+
+        const ui = {
+            modal(show) { document.getElementById('loginModal').style.display = show ? 'flex' : 'none'; }
+        };
+
         if(localStorage.getItem('hlaxho_s')) {
             document.getElementById('guest-nav').classList.add('hidden');
             document.getElementById('user-nav').classList.remove('hidden');
-            document.getElementById('u-name').innerText = `OPERADOR: ${localStorage.getItem('hlaxho_s').toUpperCase()}`;
+            document.getElementById('u-name').innerText = `OP: ${localStorage.getItem('hlaxho_s').toUpperCase()}`;
         }
 
-        window.onclick = (e) => { if(e.target.className === 'modal') e.target.style.display = 'none'; };
+        window.onclick = (e) => { if(e.target.className === 'modal') ui.modal(false); };
     </script>
 </body>
 </html>
