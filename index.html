@@ -3,160 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HLAXHO | Elite Scripting Syndicate</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <title>HLAXHO | Precision Engineered. Beyond Silicon.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         :root {
-            --gold: #d4af37;
-            --gold-glow: rgba(212, 175, 55, 0.4);
-            --black: #080808;
-            --deep-black: #000000;
-            --gray: #1a1a1a;
-            --text-gray: #888;
+            --gold: #c6a35a; /* Dorado más sutil y de referencia */
+            --gold-glow: rgba(198, 163, 90, 0.3);
+            --black: #0a0a0a; /* Negro de la imagen de referencia */
+            --gray: #222;
+            --text-gray: #aaa;
+            --font-main: 'Inter', sans-serif;
+            --font-logo: 'Cinzel', serif; /* Para replicar el logo de referencia */
         }
 
+        /* --- RESET & CURSOR --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
-        body { background-color: var(--black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        body { background-color: var(--black); color: white; font-family: var(--font-main); overflow-x: hidden; }
         
-        /* --- CURSOR --- */
-        #cursor { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); }
-        #cursor-blur { position: fixed; width: 150px; height: 150px; background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); opacity: 0.4; }
+        #cursor { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); opacity: 0; animation: fadeInCursor 1s forwards 3s; }
+        @keyframes fadeInCursor { to { opacity: 1; } }
+
+        /* --- SISTEMA DE ANIMACIONES DE ENTRADA (GROK) --- */
+        /* Definimos los estados iniciales (ocultos) */
+        .ani-fade-down { opacity: 0; transform: translateY(-20px); }
+        .ani-fade-up { opacity: 0; transform: translateY(20px); }
+        .ani-scale-in { opacity: 0; transform: scale(0.9); }
+        .ani-stagger > * { opacity: 0; transform: translateY(10px); }
+
+        /* Clases que activará JS para iniciar la animación */
+        .start-ani { animation: ani-fade 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+        @keyframes ani-fade { to { opacity: 1; transform: translate(0) scale(1); } }
 
         /* --- NOTIFICACIONES --- */
         #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10001; width: 350px; }
-        .notification { background: rgba(10, 10, 10, 0.95); border-left: 4px solid var(--gold); color: white; padding: 20px; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); backdrop-filter: blur(15px); animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .notification { background: rgba(15, 15, 15, 0.95); border-left: 2px solid var(--gold); color: white; padding: 20px; margin-bottom: 15px; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); backdrop-filter: blur(15px); animation: slideIn 0.5s ease forwards; }
         @keyframes slideIn { from { transform: translateX(110%); } to { transform: translateX(0); } }
 
-        /* --- NAVBAR --- */
-        nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
-        .logo { font-family: 'Syncopate', sans-serif; color: var(--gold); font-size: 1.5rem; letter-spacing: 5px; }
+        /* --- NAVBAR (REPLICADA DE REFERENCIA) --- */
+        nav { position: fixed; top: 0; width: 100%; padding: 25px 8%; display: flex; justify-content: space-between; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+        .logo { font-family: var(--font-logo); color: #fff; font-size: 1.4rem; letter-spacing: 3px; font-weight: 400; }
+        
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #fff; font-size: 0.8rem; letter-spacing: 1px; font-weight: 300; transition: 0.3s; opacity: 0.7; }
+        .nav-links a:hover { opacity: 1; }
+        .nav-links a.active { opacity: 1; font-weight: 400; }
+        .contact-btn { border: 1px solid var(--gold); padding: 8px 20px; color: var(--gold) !important; opacity: 1 !important; }
 
         /* --- MODALES --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
-        .modal-content { background: #111; padding: 40px; border: 1px solid var(--gold); width: 90%; max-width: 400px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--gray); color: white; outline: none; }
+        .modal-content { background: #111; padding: 40px; border: 1px solid var(--gray); width: 90%; max-width: 400px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--gray); color: white; outline: none; font-size: 0.8rem; }
+        input:focus { border-color: var(--gold); }
 
-        /* --- GRID DE PRECIOS --- */
-        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 100px 8%; margin-top: 50px; }
-        .p-card { background: linear-gradient(145deg, #0f0f0f, #050505); border: 1px solid var(--gray); padding: 45px 30px; position: relative; transition: 0.5s; text-align: center; }
-        .p-card:hover { border-color: var(--gold); transform: translateY(-15px); box-shadow: 0 15px 40px rgba(212,175,55,0.15); }
+        /* --- HERO (REPLICADO DE REFERENCIA) --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); padding: 0 10%; }
         
-        .p-card.plus { border-color: #888; } /* Estilo intermedio */
-        .p-card.super { border-width: 2px; border-color: var(--gold); background: radial-gradient(circle at top right, #151208, #050505); }
+        /* El título dorado gigante de referencia */
+        .hero-title { font-family: var(--font-logo); font-size: clamp(4rem, 12vw, 10rem); color: var(--gold); font-weight: 400; letter-spacing: 15px; text-shadow: 0 0 50px rgba(198, 163, 90, 0.3); line-height: 1; margin-bottom: 20px; position: relative; }
+        
+        /* El subtítulo con las líneas de referencia */
+        .hero-subtitle-container { position: relative; display: inline-block; padding: 0 60px; margin-bottom: 60px; }
+        .hero-subtitle-container::before, .hero-subtitle-container::after { content: ''; position: absolute; top: 50%; width: 50px; height: 1px; background: #fff; opacity: 0.5; }
+        .hero-subtitle-container::before { left: 0; }
+        .hero-subtitle-container::after { right: 0; }
+        .hero-subtitle { color: #fff; letter-spacing: 5px; font-weight: 300; font-size: 0.9rem; text-transform: uppercase; }
 
-        .tier-label { font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); font-weight: 900; margin-bottom: 10px; display: block; }
-        .price-tag { font-size: 3.5rem; font-weight: 900; margin: 20px 0; font-family: 'Syncopate', sans-serif; }
-        .price-tag span { font-size: 1rem; color: var(--text-gray); }
+        .hero-btns { display: flex; gap: 20px; }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.3); background: transparent; color: #fff; padding: 15px 35px; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
+        .btn-outline:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); }
 
-        .btn-gold { background: var(--gold); color: black; padding: 18px; text-decoration: none; font-weight: 900; display: block; margin-top: 30px; transition: 0.3s; border: 1px solid var(--gold); text-transform: uppercase; letter-spacing: 2px; }
-        .btn-gold:hover { background: transparent; color: var(--gold); }
+        /* --- SECCIÓN DE PLANES (MANTENIENDO LO ANTERIOR) --- */
+        .plans { padding: 100px 8%; background: #0a0a0a; border-top: 1px solid var(--gray); }
+        .section-title { font-family: var(--font-logo); font-size: 2.5rem; color: #fff; text-align: center; margin-bottom: 10px; letter-spacing: 5px; }
+        .section-subtitle { color: var(--gold); text-align: center; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 60px; text-transform: uppercase; }
+        
+        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .p-card { background: rgba(20,20,20,0.5); border: 1px solid var(--gray); padding: 45px 30px; position: relative; transition: 0.5s; text-align: center; backdrop-filter: blur(5px); }
+        .p-card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(198,163,90,0.1); }
+        
+        .p-card.plus { border-color: #555; }
+        .p-card.super { border-color: var(--gold); background: radial-gradient(circle at top, #1a1a1a, #0a0a0a); }
 
-        ul { list-style: none; text-align: left; margin-top: 30px; }
-        li { margin-bottom: 12px; color: #ccc; font-size: 0.9rem; }
-        li i { color: var(--gold); margin-right: 10px; }
+        .price-tag { font-family: var(--font-logo); font-size: 3.5rem; font-weight: 400; margin: 20px 0; color: #fff; }
+        .price-tag span { font-size: 1rem; color: var(--text-gray); font-family: var(--font-main); }
 
-        .hidden { display: none; }
+        .btn-plan { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 15px; text-decoration: none; font-weight: 400; display: block; margin-top: 30px; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
+        .btn-plan:hover { background: var(--gold); color: black; }
+
+        ul { list-style: none; text-align: left; margin-top: 30px; color: #ccc; font-size: 0.85rem; }
+        li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        li i { color: var(--gold); font-size: 0.7rem; }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
     <div id="notification-container"></div>
     <div id="cursor"></div>
-    <div id="cursor-blur"></div>
 
     <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <h2 style="font-family:'Syncopate'; color:var(--gold)">ACCESO</h2>
+        <div class="modal-content ani-scale-in start-ani">
+            <h2 style="font-family:var(--font-logo); color:#fff; letter-spacing:3px; margin-bottom:20px;">ACCESO</h2>
             <input type="text" id="loginUser" placeholder="USUARIO">
             <input type="password" id="loginPass" placeholder="CONTRASEÑA">
-            <button class="btn-gold" style="width:100%" onclick="auth.login()">ENTRAR AL SISTEMA</button>
-            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.8rem">¿No tienes cuenta? <span style="color:white">Regístrate aquí</span></p>
+            <button class="btn-outline" style="width:100%; border-color:var(--gold); color:var(--gold);" onclick="auth.login()">ENTRAR</button>
+            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.75rem; text-align:center;">¿No tienes cuenta? <span style="color:white">Regístrate</span></p>
         </div>
     </div>
 
     <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <h2 style="font-family:'Syncopate'; color:var(--gold)">REGISTRO</h2>
+        <div class="modal-content ani-scale-in start-ani">
+            <h2 style="font-family:var(--font-logo); color:#fff; letter-spacing:3px; margin-bottom:20px;">REGISTRO</h2>
             <input type="text" id="regUser" placeholder="NUEVO USUARIO">
             <input type="password" id="regPass" placeholder="CONTRASEÑA">
-            <button class="btn-gold" style="width:100%" onclick="auth.register()">CREAR IDENTIDAD</button>
-            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.8rem">¿Ya eres miembro? <span style="color:white">Inicia sesión</span></p>
+            <button class="btn-outline" style="width:100%; border-color:var(--gold); color:var(--gold);" onclick="auth.register()">CREAR CUENTA</button>
+            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.75rem; text-align:center;">¿Ya eres miembro? <span style="color:white">Inicia sesión</span></p>
         </div>
     </div>
 
-    <nav>
+    <nav class="ani-fade-down" style="animation-delay: 0.5s;">
         <div class="logo">HLAXHO</div>
-        <div class="user-zone">
+        <div class="nav-links ani-stagger" style="animation-delay: 1s;">
+            <a href="#">Philosophy</a>
+            <a href="#">Systems</a>
+            <a href="#">Products</a>
+            <a href="#">Metrics</a>
+            
             <div id="guest-nav">
-                <a href="#" onclick="ui.showModal('loginModal')" style="color: white; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; border: 1px solid var(--gold); padding: 8px 15px;">LOGIN</a>
+                <a href="#" onclick="ui.showModal('loginModal')">LOGIN</a>
             </div>
-            <div id="user-nav" class="hidden">
-                <span id="welcome-msg" style="color: var(--gold); font-size: 0.8rem; font-weight: 900;"></span>
-                <a href="#" onclick="auth.logout()" style="color: #ff4444; text-decoration: none; font-size: 0.7rem; margin-left: 15px; font-weight: bold;">[ DESCONECTAR ]</a>
+            <div id="user-nav" class="hidden" style="display:flex; align-items:center;">
+                <span id="welcome-msg" style="color: var(--gold); font-size: 0.7rem; letter-spacing:1px;"></span>
+                <a href="#" onclick="auth.logout()" style="color: #ff4444 !important; font-size: 0.6rem; margin-left: 10px;">[ SALIR ]</a>
             </div>
+            
+            <a href="#" class="contact-btn">CONTACT</a>
         </div>
     </nav>
 
-    <header style="height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-top: 100px;">
-        <h1 data-aos="zoom-in" style="font-family:'Syncopate'; font-size: 5rem; margin-bottom: 10px;">PRICING</h1>
-        <p style="color: var(--gold); letter-spacing: 8px; font-weight: 300;">SELECCIONA TU NIVEL DE ACCESO</p>
+    <header class="hero">
+        <h1 class="hero-title ani-scale-in" style="animation-delay: 1.5s;">HLAXHO</h1>
+        <div class="hero-subtitle-container ani-fade-up" style="animation-delay: 2s;">
+            <p class="hero-subtitle">PRECISION ENGINEERED. BEYOND SILICON.</p>
+        </div>
+        <div class="hero-btns ani-stagger" style="animation-delay: 2.5s;">
+            <a href="#" class="btn-outline">EXPLORE COLLECTION</a>
+            <a href="#" class="btn-outline">INITIATE CORE</a>
+        </div>
     </header>
 
-    <section class="premium-grid">
-        <div class="p-card" data-aos="fade-up">
-            <span class="tier-label">NIVEL I</span>
-            <h2 style="font-family:'Syncopate'">VIP</h2>
-            <div class="price-tag">$19<span>/mes</span></div>
-            <ul>
-                <li><i class="fas fa-check"></i> Scripts de Rendimiento Base</li>
-                <li><i class="fas fa-check"></i> Acceso a Comunidad VIP</li>
-                <li><i class="fas fa-check"></i> Actualizaciones Mensuales</li>
-            </ul>
-            <button class="btn-gold" onclick="shop.buy('VIP')">OBTENER VIP</button>
-        </div>
+    <section class="plans" id="plans">
+        <h2 class="section-title ani-fade-up">TIER ACCESS</h2>
+        <p class="section-subtitle ani-fade-up">SELECCIONA TU NIVEL DE OPERADOR</p>
+        
+        <div class="premium-grid ani-stagger" style="animation-delay: 0.3s;">
+            <div class="p-card">
+                <h3 style="font-family:var(--font-logo); color:#fff;">VIP</h3>
+                <div class="price-tag">$19<span>/mes</span></div>
+                <ul>
+                    <li><i class="fas fa-circle"></i> Scripts de Rendimiento Base</li>
+                    <li><i class="fas fa-circle"></i> Acceso a Comunidad VIP</li>
+                </ul>
+                <button class="btn-plan" onclick="shop.buy('VIP')">ADQUIRIR TIER I</button>
+            </div>
 
-        <div class="p-card plus" data-aos="fade-up" data-aos-delay="100">
-            <span class="tier-label" style="color: #fff;">NIVEL II</span>
-            <h2 style="font-family:'Syncopate'">VIP PLUS</h2>
-            <div class="price-tag">$45<span>/mes</span></div>
-            <ul>
-                <li><i class="fas fa-check"></i> Todo lo incluido en VIP</li>
-                <li><i class="fas fa-check"></i> Scripts Exclusivos (Tier 2)</li>
-                <li><i class="fas fa-check"></i> Acceso Anticipado a Betas</li>
-                <li><i class="fas fa-check"></i> Canal Privado VIP+</li>
-            </ul>
-            <button class="btn-gold" style="background: #eee; border-color:#eee" onclick="shop.buy('VIP PLUS')">OBTENER VIP PLUS</button>
-        </div>
+            <div class="p-card plus">
+                <h3 style="font-family:var(--font-logo); color:#fff;">VIP PLUS</h3>
+                <div class="price-tag">$45<span>/mes</span></div>
+                <ul>
+                    <li><i class="fas fa-circle"></i> Todo lo incluido en VIP</li>
+                    <li><i class="fas fa-circle"></i> Scripts Exclusivos (Tier 2)</li>
+                    <li><i class="fas fa-circle"></i> Acceso Anticipado a Betas</li>
+                </ul>
+                <button class="btn-plan" onclick="shop.buy('VIP PLUS')" style="background:#fff; color:#000; border-color:#fff;">ADQUIRIR TIER II</button>
+            </div>
 
-        <div class="p-card super" data-aos="fade-up" data-aos-delay="200">
-            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 5px 20px; font-size: 0.6rem; font-weight: 900; letter-spacing: 2px;">MÁXIMO PODER</div>
-            <span class="tier-label">NIVEL ELITE</span>
-            <h2 style="font-family:'Syncopate'">SUPER VIP</h2>
-            <div class="price-tag">$89<span>/mes</span></div>
-            <ul>
-                <li><i class="fas fa-check"></i> Acceso Total al Repositorio</li>
-                <li><i class="fas fa-check"></i> Herramientas Experimentales</li>
-                <li><i class="fas fa-check"></i> Soporte Directo por Ingenieros</li>
-                <li><i class="fas fa-check"></i> Scripting Personalizado</li>
-            </ul>
-            <button class="btn-gold" onclick="shop.buy('SUPER VIP')">ADQUIRIR ELITE</button>
+            <div class="p-card super">
+                <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 3px 15px; font-size: 0.55rem; font-weight: 900; letter-spacing: 1px;">ELITE ACCESS</div>
+                <h3 style="font-family:var(--font-logo); color:var(--gold);">SUPER VIP</h3>
+                <div class="price-tag">$89<span>/mes</span></div>
+                <ul>
+                    <li><i class="fas fa-circle"></i> Acceso Total al Repositorio</li>
+                    <li><i class="fas fa-circle"></i> Herramientas Experimentales</li>
+                    <li><i class="fas fa-circle"></i> Soporte Directo 1:1</li>
+                    <li><i class="fas fa-circle"></i> Scripting Personalizado</li>
+                </ul>
+                <button class="btn-plan" onclick="shop.buy('SUPER VIP')">ADQUIRIR ELITE</button>
+            </div>
         </div>
     </section>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init();
+        // --- SISTEMA DE ANIMACIÓN DE ENTRADA (GROK) ---
+        // Al cargar la página, buscamos elementos y activamos animaciones
+        window.addEventListener('load', () => {
+            // Animaciones individuales
+            document.querySelectorAll('.ani-fade-down, .ani-fade-up, .ani-scale-in').forEach(el => {
+                el.classList.add('start-ani');
+            });
 
+            // Animaciones escalonadas (stagger)
+            document.querySelectorAll('.ani-stagger').forEach(container => {
+                container.classList.add('start-ani'); // Activa el contenedor
+                let delay = 0;
+                Array.from(container.children).forEach(child => {
+                    child.style.transitionDelay = delay + 's';
+                    child.style.opacity = '1';
+                    child.style.transform = 'translateY(0)';
+                    delay += 0.15; // Tiempo entre cada hijo
+                });
+            });
+        });
+
+        // --- MANTENIENDO LÓGICA ANTERIOR ---
         const auth = {
             register() {
                 const u = document.getElementById('regUser').value;
                 const p = document.getElementById('regPass').value;
-                if(!u || !p) return ui.notify("Error: Datos incompletos", "gold");
+                if(!u || !p) return ui.notify("DATOS INCOMPLETOS", "gold");
                 localStorage.setItem('hlaxho_user', JSON.stringify({user: u, pass: p}));
-                ui.notify("SISTEMA: Cuenta registrada correctamente.", "gold");
+                ui.notify("SISTEMA: Cuenta registrada.", "gold");
                 ui.toggleModals();
             },
             login() {
@@ -174,7 +244,7 @@
                 if(s) {
                     document.getElementById('guest-nav').className = 'hidden';
                     document.getElementById('user-nav').className = '';
-                    document.getElementById('welcome-msg').innerText = `ID: ${s.toUpperCase()}`;
+                    document.getElementById('welcome-msg').innerText = `OP: ${s.toUpperCase()}`;
                 }
             }
         };
@@ -189,16 +259,15 @@
                 setTimeout(() => {
                     ui.notify(`PAGO CONFIRMADO. ¡Bienvenido al nivel ${plan}!`, "gold");
                     setTimeout(() => {
-                        // Notificación de ticket
                         const ticketNotif = document.createElement('div');
                         ticketNotif.className = 'notification';
                         ticketNotif.style.borderColor = "#5865F2";
                         ticketNotif.innerHTML = `
                             <div style="display:flex; align-items:center; gap:15px">
-                                <i class="fab fa-discord" style="font-size:2rem; color:#5865F2"></i>
-                                <div>
+                                <i class="fab fa-discord" style="font-size:1.5rem; color:#5865F2"></i>
+                                <div style="font-size:0.8rem">
                                     <strong style="display:block">PASO FINAL</strong>
-                                    <small>Crea un <b>ticket en Discord</b> para recibir tu rol de ${plan} automáticamente.</small>
+                                    Crea un ticket en Discord para recibir tu rol.
                                 </div>
                             </div>
                         `;
@@ -214,24 +283,23 @@
             toggleModals() {
                 const l = document.getElementById('loginModal');
                 const r = document.getElementById('registerModal');
-                if(l.style.display === 'flex') { l.style.display = 'none'; r.style.display = 'flex'; }
-                else { l.style.display = 'flex'; r.style.display = 'none'; }
+                if(l.style.display === 'flex') { l.style.display = 'none'; ui.showModal('registerModal'); }
+                else { l.style.display = 'none'; ui.showModal('loginModal'); }
             },
             notify(msg, color) {
                 const c = document.getElementById('notification-container');
                 const n = document.createElement('div');
                 n.className = 'notification';
-                n.innerHTML = `<i class="fas fa-terminal"></i> <span style="margin-left:10px">${msg}</span>`;
+                n.innerHTML = `<i class="fas fa-terminal" style="font-size:0.8rem; color:var(--gold)"></i> <span style="margin-left:10px; font-size:0.8rem;">${msg}</span>`;
                 c.appendChild(n);
                 setTimeout(() => n.remove(), 6000);
             }
         };
 
+        // --- CURSOR ---
         document.addEventListener('mousemove', (e) => {
             document.getElementById('cursor').style.left = e.clientX + 'px';
             document.getElementById('cursor').style.top = e.clientY + 'px';
-            document.getElementById('cursor-blur').style.left = e.clientX + 'px';
-            document.getElementById('cursor-blur').style.top = e.clientY + 'px';
         });
 
         window.onclick = (e) => { if(e.target.className === 'modal') ui.hideModals(); };
