@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HLAXHO | Elite Scripts & Premium Power</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
@@ -13,91 +13,76 @@
             --bg-black: #050505;
             --gold-primary: #D4AF37;
             --gold-light: #F9E498;
-            --gold-dark: #B38B2F;
-            --glass: rgba(255, 255, 255, 0.04);
-            --border-gold: rgba(212, 175, 55, 0.25);
-            --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --gold-dark: #996515;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border-gold: rgba(212, 175, 55, 0.3);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg-black); color: white; overflow-x: hidden; }
 
-        /* === LOADING SCREEN === */
-        #loader {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-black); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 10px; }
+
+        /* --- Background Particles --- */
+        #particles-js {
             position: fixed;
-            inset: 0;
-            background: #050505;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 1.2s ease;
-        }
-        .loader-content {
-            text-align: center;
-        }
-        .loader-logo {
-            font-size: 4.5rem;
-            font-weight: 900;
-            letter-spacing: 12px;
-            color: var(--gold-primary);
-            margin-bottom: 30px;
-            animation: glowPulse 2s infinite alternate;
-        }
-        .loader-bar {
-            width: 280px;
-            height: 2px;
-            background: #222;
-            margin: 0 auto;
-            position: relative;
-            overflow: hidden;
-        }
-        .loader-bar::after {
-            content: '';
-            position: absolute;
+            width: 100%;
             height: 100%;
-            width: 40%;
-            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
-            animation: loadingBar 1.8s infinite linear;
-        }
-        @keyframes glowPulse { from { text-shadow: 0 0 20px #D4AF37; } to { text-shadow: 0 0 50px #F9E498; } }
-        @keyframes loadingBar { 0% { transform: translateX(-100%); } 100% { transform: translateX(400%); } }
-
-        /* Mouse Glow */
-        .mouse-glow {
-            position: fixed;
-            width: 420px;
-            height: 420px;
-            background: radial-gradient(circle, rgba(212,175,55,0.18) 0%, transparent 70%);
-            pointer-events: none;
             z-index: 1;
-            mix-blend-mode: screen;
-            display: none;
+            pointer-events: none;
         }
 
-        /* Navigation */
+        .main-content { position: relative; z-index: 2; }
+
+        /* --- Navigation --- */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 25px 8%;
+            padding: 30px 8%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
             position: fixed;
             width: 100%;
             top: 0;
-            z-index: 1000;
-            background: linear-gradient(to bottom, rgba(5,5,5,0.95), transparent);
-            backdrop-filter: blur(12px);
+            z-index: 100;
         }
-        .logo { font-weight: 900; font-size: 2rem; letter-spacing: 6px; color: var(--gold-primary); text-shadow: 0 0 25px rgba(212,175,55,0.6); }
-        .nav-links { display: flex; gap: 35px; align-items: center; }
-        .nav-links a {
-            color: #ddd; text-decoration: none; text-transform: uppercase; font-size: 0.85rem;
-            letter-spacing: 1.5px; transition: var(--transition);
-        }
-        .nav-links a:hover { color: var(--gold-light); text-shadow: 0 0 15px var(--gold-primary); }
-        .hamburger { display: none; font-size: 1.8rem; cursor: pointer; color: var(--gold-primary); }
 
-        /* Hero */
+        .logo {
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: 4px;
+            color: var(--gold-primary);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .nav-links a {
+            color: #ccc;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover { color: var(--gold-light); }
+
+        /* --- Hero Section --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -105,269 +90,292 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding: 0 20px;
+            background: radial-gradient(circle at center, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(to bottom, #fff 30%, var(--gold-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.3));
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #aaa;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+        }
+
+        .btn-group { display: flex; gap: 20px; }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(212,175,55,0.08) 0%, transparent 60%);
-            z-index: 1;
-        }
-        .hero h1 {
-            font-size: clamp(4.5rem, 12vw, 9rem);
-            font-weight: 900;
-            letter-spacing: -4px;
-            background: linear-gradient(180deg, #fff 40%, var(--gold-primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 40px rgba(212,175,55,0.5));
-            z-index: 2;
-        }
-        .hero p {
-            font-size: 1.6rem;
-            color: #ccc;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            margin: 20px 0 50px;
-            z-index: 2;
-        }
 
-        .btn {
-            padding: 18px 48px;
-            border-radius: 4px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
         .btn-primary {
             background: var(--gold-primary);
-            color: #111;
-            box-shadow: 0 0 30px rgba(212,175,55,0.5);
+            color: black;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
         }
-        .btn-primary:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(212,175,55,0.7); }
 
-        /* Sections */
-        section { padding: 120px 10%; position: relative; z-index: 2; }
-        .section-title { text-align: center; margin-bottom: 70px; }
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.6);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border-gold);
+            color: var(--gold-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--gold-light);
+        }
+
+        /* --- Sections General --- */
+        section { padding: 100px 10%; }
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
         .section-title h2 {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             color: var(--gold-primary);
+            margin-bottom: 15px;
         }
         .section-title div {
-            width: 70px;
-            height: 3px;
-            background: linear-gradient(to right, transparent, var(--gold-primary), transparent);
-            margin: 15px auto 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gold-primary);
+            margin: 0 auto;
         }
 
+        /* --- Cards --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
+
         .card {
             background: var(--glass);
             border: 1px solid var(--border-gold);
-            padding: 45px 30px;
-            border-radius: 12px;
+            padding: 40px;
+            border-radius: 5px;
             text-align: center;
             transition: var(--transition);
-            backdrop-filter: blur(12px);
-        }
-        .card:hover {
-            transform: translateY(-15px) rotateX(8deg) rotateY(8deg);
-            border-color: var(--gold-primary);
-            box-shadow: 0 30px 60px rgba(212,175,55,0.2);
         }
 
-        /* Pricing */
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(212, 175, 55, 0.05);
+            border-color: var(--gold-primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--gold-primary);
+            margin-bottom: 20px;
+        }
+
+        /* --- Pricing Table --- */
         .price-card {
             background: linear-gradient(145deg, #111, #050505);
-            padding: 55px 35px;
+            padding: 50px 30px;
             border: 1px solid var(--border-gold);
-            border-radius: 12px;
-            height: 100%;
             position: relative;
-            transition: var(--transition);
-        }
-        .price-card.featured {
-            border: 3px solid var(--gold-primary);
-            transform: scale(1.06);
-            box-shadow: 0 0 70px rgba(212,175,55,0.3);
-        }
-        .badge {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--gold-primary);
-            color: #111;
-            padding: 6px 22px;
-            font-size: 0.75rem;
-            font-weight: 900;
-            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Checkout Modal */
-        #checkoutModal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.95);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
+        .price-card.featured {
+            border-width: 2px;
+            transform: scale(1.05);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.15);
         }
-        .modal-content {
-            background: #0a0a0a;
-            border: 2px solid var(--gold-primary);
-            width: 90%;
-            max-width: 460px;
-            padding: 40px;
-            border-radius: 12px;
+
+        .price-card h3 { color: var(--gold-primary); font-size: 1.8rem; margin-bottom: 20px; }
+        .price-card .price { font-size: 3rem; font-weight: 900; margin-bottom: 30px; }
+        .price-card ul { list-style: none; margin-bottom: 40px; color: #888; text-align: left;}
+        .price-card ul li { margin-bottom: 15px; }
+        .price-card ul li i { color: var(--gold-primary); margin-right: 10px; }
+
+        /* --- Footer --- */
+        footer {
+            padding: 50px 10%;
+            border-top: 1px solid var(--border-gold);
             text-align: center;
+            color: #555;
+        }
+
+        .social-links { margin-bottom: 20px; }
+        .social-links a { color: var(--gold-primary); font-size: 1.5rem; margin: 0 15px; transition: 0.3s; }
+        .social-links a:hover { color: white; filter: drop-shadow(0 0 5px var(--gold-primary)); }
+
+        /* --- CTA Section --- */
+        .cta {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=2070') center/cover;
+            padding: 100px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-gold);
+            border-bottom: 1px solid var(--border-gold);
         }
 
         @media (max-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+            .price-card.featured { transform: scale(1); }
             .nav-links { display: none; }
-            .hamburger { display: block; }
         }
     </style>
 </head>
 <body>
 
-    <!-- LOADING SCREEN -->
-    <div id="loader">
-        <div class="loader-content">
-            <div class="loader-logo">HLAXHO</div>
-            <div class="loader-bar"></div>
-            <p style="margin-top: 25px; color: #aaa; letter-spacing: 3px; font-size: 0.9rem;">INITIALIZING ELITE ACCESS...</p>
-        </div>
-    </div>
+    <div id="particles-js"></div>
 
-    <!-- Mouse Glow -->
-    <div class="mouse-glow" id="mouseGlow"></div>
-
-    <nav>
-        <div class="logo">HLAXHO</div>
-        <div class="nav-links" id="navLinks">
-            <a href="#about">Sobre</a>
-            <a href="#scripts">Scripts</a>
-            <a href="#pricing">Premium</a>
-            <a href="#showcase">Ventajas</a>
-            <a href="https://discord.gg/hlaxho" target="_blank"><i class="fab fa-discord"></i></a>
-        </div>
-        <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
-    </nav>
-
-    <!-- HERO -->
-    <header class="hero" id="home">
-        <div id="particles-js"></div>
-        <h1 data-aos="zoom-out" data-aos-duration="1400">HLAXHO</h1>
-        <p data-aos="fade-up" data-aos-delay="500">Elite Scripts. Premium Power.</p>
-        <div data-aos="fade-up" data-aos-delay="800">
-            <button onclick="showCheckout()" class="btn btn-primary" style="font-size:1.1rem;">GET PREMIUM ACCESS</button>
-        </div>
-    </header>
-
-    <!-- Resto de secciones (mismo contenido que v2.0, solo actualizo Pricing con botón mejorado) -->
-    <section id="about"> ... (mismo que antes) </section>
-    <section id="scripts" style="background: rgba(212,175,55,0.015);"> ... </section>
-
-    <section id="pricing">
-        <div class="section-title" data-aos="fade-up"><h2>Elige tu Nivel de Poder</h2><div></div></div>
-        <div class="grid">
-            <div class="price-card card" data-aos="zoom-in"><h3>VIP</h3><div class="price">$19.99</div><ul><!-- items --></ul><button onclick="showCheckout()" class="btn btn-secondary">Seleccionar</button></div>
-            
-            <div class="price-card card featured" data-aos="zoom-in" data-aos-delay="200">
-                <div class="badge">MÁS POPULAR</div>
-                <h3>VIP PLUS</h3>
-                <div class="price">$39.99</div>
-                <ul><!-- items --></ul>
-                <button onclick="showCheckout()" class="btn btn-primary">Seleccionar</button>
+    <div class="main-content">
+        <nav>
+            <div class="logo">HLAXHO</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#scripts">Scripts</a>
+                <a href="#pricing">Premium</a>
+                <a href="https://discord.gg/hlaxho"><i class="fab fa-discord"></i> Community</a>
             </div>
-            
-            <div class="price-card card" data-aos="zoom-in" data-aos-delay="300"><h3>SUPER VIP</h3><div class="price">$89.99</div><ul><!-- items --></ul><button onclick="showCheckout()" class="btn btn-secondary">Seleccionar</button></div>
-        </div>
-    </section>
+        </nav>
 
-    <!-- SHOWCASE y CTA igual que antes -->
-
-    <!-- CHECKOUT MODAL -->
-    <div id="checkoutModal">
-        <div class="modal-content">
-            <h2 style="color:var(--gold-primary); margin-bottom:10px;">CHECKOUT SECURE</h2>
-            <p id="selectedPlan" style="margin-bottom:30px; color:#aaa;"></p>
-            
-            <div style="text-align:left; margin:25px 0;">
-                <label style="display:block; margin:15px 0 8px; color:#ccc;">Nombre completo</label>
-                <input type="text" value="Alex Rivera" style="width:100%; padding:14px; background:#111; border:1px solid var(--border-gold); color:white; border-radius:6px;">
-                
-                <label style="display:block; margin:15px 0 8px; color:#ccc;">Correo electrónico</label>
-                <input type="email" value="tu@email.com" style="width:100%; padding:14px; background:#111; border:1px solid var(--border-gold); color:white; border-radius:6px;">
+        <header class="hero">
+            <h1 data-aos="zoom-out" data-aos-duration="1500">HLAXHO</h1>
+            <p data-aos="fade-up" data-aos-delay="500">Elite Scripts. Premium Power.</p>
+            <div class="btn-group" data-aos="fade-up" data-aos-delay="800">
+                <a href="#pricing" class="btn btn-primary">Get Access</a>
+                <a href="#scripts" class="btn btn-secondary">View Plans</a>
             </div>
-            
-            <button onclick="completePurchase()" style="width:100%; padding:18px; background:var(--gold-primary); color:#111; border:none; font-weight:900; margin-top:20px; border-radius:6px;">
-                PAGAR $39.99 • ACCESO INSTANTÁNEO
-            </button>
-            <p onclick="closeModal()" style="margin-top:20px; color:#777; cursor:pointer;">Cancelar</p>
-        </div>
-    </div>
+        </header>
 
-    <!-- FOOTER -->
-    <footer> ... (mismo que antes) </footer>
+        <section id="about">
+            <div class="section-title" data-aos="fade-up">
+                <h2>The Standard of Excellence</h2>
+                <div></div>
+            </div>
+            <div class="grid">
+                <div class="card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Optimized Performance</h3>
+                    <p>Clean code written for maximum efficiency and zero latency.</p>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-shield-halved"></i>
+                    <h3>Secure & Private</h3>
+                    <p>Encrypted tools designed to protect your identity and advantage.</p>
+                </div>
+                <div class="card" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fas fa-sync"></i>
+                    <h3>Daily Updates</h3>
+                    <p>Always ahead. We update our repository to match the latest standards.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" style="background: rgba(212, 175, 55, 0.02);">
+            <div class="section-title" data-aos="fade-up">
+                <h2>Premium Membership</h2>
+                <div></div>
+            </div>
+            <div class="grid">
+                <div class="price-card card" data-aos="flip-left" data-aos-delay="100">
+                    <h3>VIP</h3>
+                    <div class="price">$19.99</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Basic Script Access</li>
+                        <li><i class="fas fa-check"></i> Community Role</li>
+                        <li><i class="fas fa-check"></i> Standard Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary">Select Plan</a>
+                </div>
+                <div class="price-card card featured" data-aos="flip-left" data-aos-delay="200">
+                    <div style="position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--gold-primary); color:black; padding:5px 15px; font-size:0.7rem; font-weight:bold; border-radius:20px;">MOST POPULAR</div>
+                    <h3>VIP PLUS</h3>
+                    <div class="price">$39.99</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> All VIP Features</li>
+                        <li><i class="fas fa-check"></i> Exclusive Scripts</li>
+                        <li><i class="fas fa-check"></i> Early Access</li>
+                        <li><i class="fas fa-check"></i> Private Discord Canal</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Select Plan</a>
+                </div>
+                <div class="price-card card" data-aos="flip-left" data-aos-delay="300">
+                    <h3>SUPER VIP</h3>
+                    <div class="price">$89.99</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Full Repository Access</li>
+                        <li><i class="fas fa-check"></i> Experimental Tools</li>
+                        <li><i class="fas fa-check"></i> Priority 1-on-1 Support</li>
+                        <li><i class="fas fa-check"></i> Lifetime Updates</li>
+                    </ul>
+                    <a href="#" class="btn btn-secondary">Select Plan</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" data-aos="fade-in">
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">READY TO ASCEND?</h2>
+            <p style="margin-bottom: 40px; color: #ccc;">Join the elite 1% of the HLAXHO community today.</p>
+            <a href="#" class="btn btn-primary" style="padding: 20px 60px;">Get Premium Access</a>
+        </section>
+
+        <footer>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>HLAXHO &copy; 2024. All Rights Reserved.</p>
+            <p style="font-size: 0.7rem; margin-top: 10px; letter-spacing: 2px;">LUXURY TECH INTERFACE V1.0</p>
+        </footer>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Loading Screen
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.style.display = 'none', 1200);
-            }, 1800);
-        });
-
+        // Init Scroll Animations
         AOS.init({ duration: 1000, once: true });
 
-        // Particles (igual que antes)
-        particlesJS("particles-js", { /* misma config que v2.0 */ });
-
-        // Mouse Glow
-        const mouseGlow = document.getElementById('mouseGlow');
-        document.addEventListener('mousemove', (e) => {
-            mouseGlow.style.display = 'block';
-            mouseGlow.style.left = (e.clientX - 210) + 'px';
-            mouseGlow.style.top = (e.clientY - 210) + 'px';
+        // Particles Configuration
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#D4AF37" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5, "random": true },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#D4AF37", "opacity": 0.2, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" } },
+                "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } } }
+            },
+            "retina_detect": true
         });
-
-        // Hamburger
-        document.getElementById('hamburger').addEventListener('click', () => {
-            const links = document.getElementById('navLinks');
-            links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        // Checkout Modal
-        let currentPlan = '';
-        function showCheckout(plan = 'VIP PLUS') {
-            currentPlan = plan;
-            document.getElementById('selectedPlan').textContent = `Plan seleccionado: ${plan} • $39.99`;
-            document.getElementById('checkoutModal').style.display = 'flex';
-        }
-        function closeModal() {
-            document.getElementById('checkoutModal').style.display = 'none';
-        }
-        function completePurchase() {
-            alert('✅ ¡Compra exitosa! Bienvenido a HLAXHO Elite.\n\nTus credenciales han sido enviadas a tu correo.');
-            closeModal();
-        }
-
-        console.log('%cHLAXHO v3.0 — Nivel 200x cargado. Listo para dominar.', 'color:#D4AF37; font-size:14px; font-weight:900;');
     </script>
 </body>
 </html>
