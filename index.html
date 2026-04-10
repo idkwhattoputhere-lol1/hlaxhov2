@@ -14,6 +14,50 @@
             --font-logo: 'Cinzel', serif;
         }
 
+        /* --- PANTALLA DE CARGA (NUEVO) --- */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: var(--black);
+            z-index: 20000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-in-out, visibility 1s;
+        }
+        .loader-logo {
+            font-family: var(--font-logo);
+            color: var(--gold);
+            font-size: 2rem;
+            letter-spacing: 15px;
+            animation: pulse-gold 2s infinite ease-in-out;
+        }
+        .loader-bar {
+            width: 200px;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.1);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .loader-progress {
+            position: absolute;
+            height: 100%;
+            width: 0;
+            background: var(--gold);
+            animation: load-progress 1.5s ease-in-out forwards;
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { opacity: 0.5; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1); text-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+        }
+        @keyframes load-progress {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
         /* --- BASE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
         html { scroll-behavior: smooth; }
@@ -22,7 +66,7 @@
         #cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-100px, -100px); box-shadow: 0 0 15px var(--gold); }
         #cursor-blur { position: fixed; width: 45px; height: 45px; border: 1px solid rgba(212, 175, 55, 0.1); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.2s; transform: translate(-100px, -100px); }
 
-        .reveal { opacity: 0; transform: translateY(20px); transition: all 1s ease-out; }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1.2s cubic-bezier(0.2, 0, 0.2, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* Navbar */
@@ -38,18 +82,19 @@
         .line-box { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; }
         .line { height: 1px; width: 80px; background: var(--gold); opacity: 0.4; }
 
-        /* Status & Philosophy */
+        /* Status & Metrics */
         .status-bar { display: flex; gap: 30px; justify-content: center; padding: 30px; background: rgba(255,255,255,0.02); font-size: 0.6rem; letter-spacing: 2px; }
         .led { width: 7px; height: 7px; border-radius: 50%; background: #00ff00; box-shadow: 0 0 8px #00ff00; display: inline-block; margin-right: 8px; animation: blink 2s infinite; }
         @keyframes blink { 50% { opacity: 0.2; } }
-        .philosophy { padding: 120px 15%; text-align: center; background: #080808; }
-        .philo-text { font-family: var(--font-logo); font-size: 1.4rem; line-height: 2; color: #ccc; font-style: italic; }
 
-        /* Metrics */
         .metrics { display: flex; justify-content: space-around; padding: 100px 10%; background: #050505; border-top: 1px solid rgba(255,255,255,0.03); }
         .metric-item { text-align: center; }
         .metric-val { font-size: 3rem; font-family: var(--font-logo); color: var(--gold); display: block; margin-bottom: 10px; }
         .metric-label { font-size: 0.65rem; letter-spacing: 3px; opacity: 0.5; text-transform: uppercase; }
+
+        /* Philosophy */
+        .philosophy { padding: 120px 15%; text-align: center; background: #080808; }
+        .philo-text { font-family: var(--font-logo); font-size: 1.4rem; line-height: 2; color: #ccc; font-style: italic; }
 
         /* Productos */
         .p-grid { display: flex; justify-content: center; align-items: center; gap: 30px; padding: 100px 5%; flex-wrap: wrap; }
@@ -79,6 +124,7 @@
         .n-card { background: rgba(10,10,10,0.95); border-right: 4px solid var(--gold); backdrop-filter: blur(15px); padding: 30px; width: 380px; animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; box-shadow: 0 25px 60px rgba(0,0,0,0.9); margin-bottom: 20px; border: 1px solid rgba(212, 175, 55, 0.2); }
         @keyframes slideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
+        /* Modals */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.98); z-index: 2000; display: none; justify-content: center; align-items: center; }
         .auth-box { background: #0a0a0a; border: 1px solid var(--gold); padding: 60px; width: 450px; text-align: center; }
         input { width: 100%; padding: 20px; margin-bottom: 20px; background: #000; border: 1px solid #222; color: #fff; outline: none; }
@@ -86,6 +132,11 @@
     </style>
 </head>
 <body>
+
+    <div id="loader">
+        <div class="loader-logo">HLAXHO</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
 
     <div id="cursor"></div>
     <div id="cursor-blur"></div>
@@ -165,22 +216,22 @@
     </section>
 
     <section class="faq reveal">
-        <h2 style="font-family:var(--font-logo); letter-spacing:10px; margin-bottom:50px; text-align:center;">FAQ</h2>
-        <div class="faq-item" onclick="ui.toggleFaq(this)">
+        <h2 class="reveal" style="font-family:var(--font-logo); letter-spacing:10px; margin-bottom:50px; text-align:center;">FAQ</h2>
+        <div class="faq-item reveal" onclick="ui.toggleFaq(this)">
             <div class="faq-q">¿CÓMO RECIBO MI PRODUCTO? <i class="fas fa-chevron-down"></i></div>
             <div class="faq-a">Tras realizar el pago, debes dirigirte a nuestro servidor de Discord y abrir un Ticket de Compra. Nuestro staff validará tu transacción y te entregará el acceso.</div>
         </div>
-        <div class="faq-item" onclick="ui.toggleFaq(this)">
+        <div class="faq-item reveal" onclick="ui.toggleFaq(this)">
             <div class="faq-q">¿TIENE RIESGO DE BANEO? <i class="fas fa-chevron-down"></i></div>
             <div class="faq-a">Nuestros sistemas utilizan tecnología de inyección indetectable. Sin embargo, recomendamos siempre el uso responsable para mantener la integridad de tu cuenta.</div>
         </div>
-        <div class="faq-item" onclick="ui.toggleFaq(this)">
+        <div class="faq-item reveal" onclick="ui.toggleFaq(this)">
             <div class="faq-q">¿QUÉ MÉTODOS DE PAGO ACEPTAN? <i class="fas fa-chevron-down"></i></div>
             <div class="faq-a">Actualmente aceptamos Robux como moneda principal a través de Gamepasses oficiales en nuestro grupo.</div>
         </div>
     </section>
 
-    <footer>
+    <footer class="reveal">
         <div class="footer-logo">HLAXHO</div>
         <p class="copyright">© 2026 HLAXHO APEX SYSTEMS - ALL RIGHTS RESERVED</p>
     </footer>
@@ -196,6 +247,17 @@
     </div>
 
     <script>
+        // MANEJO DEL LOADER
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+                // Activar el reveal de la primera sección manualmente
+                document.querySelector('.hero-title').classList.add('active');
+            }, 1800); // 1.8 segundos de intro
+        });
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
         }, { threshold: 0.1 });
