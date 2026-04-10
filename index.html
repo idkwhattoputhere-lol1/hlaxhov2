@@ -3,248 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HLAXHO | Precision Engineered. Beyond Silicon.</title>
+    <title>HLAXHO | Ingeniería de Precisión</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --gold: #c6a35a; /* Dorado más sutil y de referencia */
-            --gold-glow: rgba(198, 163, 90, 0.3);
-            --black: #0a0a0a; /* Negro de la imagen de referencia */
-            --gray: #222;
-            --text-gray: #aaa;
+            --gold: #d4af37;
+            --gold-dark: #aa8a2e;
+            --gold-glow: rgba(212, 175, 55, 0.2);
+            --black: #050505;
+            --gray-deep: #0f0f0f;
+            --font-logo: 'Cinzel', serif;
             --font-main: 'Inter', sans-serif;
-            --font-logo: 'Cinzel', serif; /* Para replicar el logo de referencia */
+            --transition-smooth: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* --- RESET & CURSOR --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
         body { background-color: var(--black); color: white; font-family: var(--font-main); overflow-x: hidden; }
         
-        #cursor { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); opacity: 0; animation: fadeInCursor 1s forwards 3s; }
-        @keyframes fadeInCursor { to { opacity: 1; } }
+        /* --- CURSOR PERSONALIZADO --- */
+        #cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); }
+        #cursor-blur { position: fixed; width: 40px; height: 40px; border: 1px solid var(--gold-glow); border-radius: 50%; pointer-events: none; z-index: 9999; transition: transform 0.2s; transform: translate(-50%, -50%); }
 
-        /* --- SISTEMA DE ANIMACIONES DE ENTRADA (GROK) --- */
-        /* Definimos los estados iniciales (ocultos) */
-        .ani-fade-down { opacity: 0; transform: translateY(-20px); }
-        .ani-fade-up { opacity: 0; transform: translateY(20px); }
-        .ani-scale-in { opacity: 0; transform: scale(0.9); }
-        .ani-stagger > * { opacity: 0; transform: translateY(10px); }
+        /* --- ANIMACIONES DE ENTRADA --- */
+        .reveal { opacity: 0; filter: blur(10px); transform: translateY(30px); transition: var(--transition-smooth); }
+        .reveal.active { opacity: 1; filter: blur(0px); transform: translateY(0); }
 
-        /* Clases que activará JS para iniciar la animación */
-        .start-ani { animation: ani-fade 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        /* --- NAVBAR --- */
+        nav { 
+            position: fixed; top: 0; width: 100%; padding: 30px 6%; 
+            display: flex; justify-content: space-between; align-items: center; 
+            z-index: 100; backdrop-filter: blur(10px); 
+            border-bottom: 1px solid rgba(212, 175, 55, 0.05);
+            opacity: 0; animation: fadeInNav 1.5s forwards 0.5s;
+        }
+        @keyframes fadeInNav { to { opacity: 1; } }
+        .logo { font-family: var(--font-logo); font-size: 1.6rem; letter-spacing: 6px; color: var(--gold); text-shadow: 0 0 15px var(--gold-glow); }
+        
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a { 
+            text-decoration: none; color: #fff; font-size: 0.75rem; 
+            letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; 
+            opacity: 0.6; font-weight: 300;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--gold); }
+        .btn-contact { border: 1px solid var(--gold); padding: 10px 25px; color: var(--gold) !important; opacity: 1 !important; }
 
-        @keyframes ani-fade { to { opacity: 1; transform: translate(0) scale(1); } }
+        /* --- HERO SECTION --- */
+        .hero { 
+            height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center;
+            background: radial-gradient(circle at center, #111 0%, var(--black) 100%);
+        }
+        .hero-title { 
+            font-family: var(--font-logo); font-size: clamp(3rem, 10vw, 8rem); 
+            letter-spacing: 20px; color: #fff; margin-bottom: 15px;
+            opacity: 0; transform: scale(0.8); animation: heroIn 2s forwards 1s;
+        }
+        @keyframes heroIn { to { opacity: 1; transform: scale(1); } }
+
+        .line-container { 
+            display: flex; align-items: center; gap: 20px; width: 100%; justify-content: center;
+            opacity: 0; animation: fadeIn 2s forwards 2s;
+        }
+        .line { height: 1px; width: 100px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+        .hero-subtitle { font-size: 0.8rem; letter-spacing: 6px; color: var(--gold); text-transform: uppercase; }
+
+        .hero-btns { 
+            margin-top: 50px; display: flex; gap: 25px; 
+            opacity: 0; animation: fadeIn 1.5s forwards 2.5s;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        .btn-lux { 
+            padding: 18px 40px; border: 1px solid rgba(255,255,255,0.1); 
+            background: transparent; color: #fff; text-decoration: none; 
+            font-size: 0.7rem; letter-spacing: 3px; transition: 0.4s;
+        }
+        .btn-lux:hover { border-color: var(--gold); background: rgba(212,175,55,0.05); box-shadow: 0 0 20px var(--gold-glow); }
+
+        /* --- FILOSOFÍA --- */
+        .philosophy { padding: 120px 15%; text-align: center; background: var(--gray-deep); }
+        .philosophy p { font-family: var(--font-logo); font-size: 1.5rem; line-height: 2; color: #eee; font-style: italic; }
+
+        /* --- PLANES --- */
+        .plans { padding: 100px 8%; }
+        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .p-card { 
+            background: rgba(10,10,10,0.8); border: 1px solid #1a1a1a; padding: 50px 30px; 
+            transition: 0.5s; text-align: center; position: relative;
+        }
+        .p-card:hover { border-color: var(--gold); transform: translateY(-10px); }
+        .p-card h3 { font-family: var(--font-logo); font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 3px; }
+        .price { font-size: 3rem; font-weight: 700; margin-bottom: 30px; }
 
         /* --- NOTIFICACIONES --- */
-        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10001; width: 350px; }
-        .notification { background: rgba(15, 15, 15, 0.95); border-left: 2px solid var(--gold); color: white; padding: 20px; margin-bottom: 15px; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); backdrop-filter: blur(15px); animation: slideIn 0.5s ease forwards; }
-        @keyframes slideIn { from { transform: translateX(110%); } to { transform: translateX(0); } }
-
-        /* --- NAVBAR (REPLICADA DE REFERENCIA) --- */
-        nav { position: fixed; top: 0; width: 100%; padding: 25px 8%; display: flex; justify-content: space-between; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
-        .logo { font-family: var(--font-logo); color: #fff; font-size: 1.4rem; letter-spacing: 3px; font-weight: 400; }
-        
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: #fff; font-size: 0.8rem; letter-spacing: 1px; font-weight: 300; transition: 0.3s; opacity: 0.7; }
-        .nav-links a:hover { opacity: 1; }
-        .nav-links a.active { opacity: 1; font-weight: 400; }
-        .contact-btn { border: 1px solid var(--gold); padding: 8px 20px; color: var(--gold) !important; opacity: 1 !important; }
-
-        /* --- MODALES --- */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
-        .modal-content { background: #111; padding: 40px; border: 1px solid var(--gray); width: 90%; max-width: 400px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--gray); color: white; outline: none; font-size: 0.8rem; }
-        input:focus { border-color: var(--gold); }
-
-        /* --- HERO (REPLICADO DE REFERENCIA) --- */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%); padding: 0 10%; }
-        
-        /* El título dorado gigante de referencia */
-        .hero-title { font-family: var(--font-logo); font-size: clamp(4rem, 12vw, 10rem); color: var(--gold); font-weight: 400; letter-spacing: 15px; text-shadow: 0 0 50px rgba(198, 163, 90, 0.3); line-height: 1; margin-bottom: 20px; position: relative; }
-        
-        /* El subtítulo con las líneas de referencia */
-        .hero-subtitle-container { position: relative; display: inline-block; padding: 0 60px; margin-bottom: 60px; }
-        .hero-subtitle-container::before, .hero-subtitle-container::after { content: ''; position: absolute; top: 50%; width: 50px; height: 1px; background: #fff; opacity: 0.5; }
-        .hero-subtitle-container::before { left: 0; }
-        .hero-subtitle-container::after { right: 0; }
-        .hero-subtitle { color: #fff; letter-spacing: 5px; font-weight: 300; font-size: 0.9rem; text-transform: uppercase; }
-
-        .hero-btns { display: flex; gap: 20px; }
-        .btn-outline { border: 1px solid rgba(255,255,255,0.3); background: transparent; color: #fff; padding: 15px 35px; text-decoration: none; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
-        .btn-outline:hover { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 15px var(--gold-glow); }
-
-        /* --- SECCIÓN DE PLANES (MANTENIENDO LO ANTERIOR) --- */
-        .plans { padding: 100px 8%; background: #0a0a0a; border-top: 1px solid var(--gray); }
-        .section-title { font-family: var(--font-logo); font-size: 2.5rem; color: #fff; text-align: center; margin-bottom: 10px; letter-spacing: 5px; }
-        .section-subtitle { color: var(--gold); text-align: center; letter-spacing: 3px; font-size: 0.8rem; margin-bottom: 60px; text-transform: uppercase; }
-        
-        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .p-card { background: rgba(20,20,20,0.5); border: 1px solid var(--gray); padding: 45px 30px; position: relative; transition: 0.5s; text-align: center; backdrop-filter: blur(5px); }
-        .p-card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(198,163,90,0.1); }
-        
-        .p-card.plus { border-color: #555; }
-        .p-card.super { border-color: var(--gold); background: radial-gradient(circle at top, #1a1a1a, #0a0a0a); }
-
-        .price-tag { font-family: var(--font-logo); font-size: 3.5rem; font-weight: 400; margin: 20px 0; color: #fff; }
-        .price-tag span { font-size: 1rem; color: var(--text-gray); font-family: var(--font-main); }
-
-        .btn-plan { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 15px; text-decoration: none; font-weight: 400; display: block; margin-top: 30px; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; }
-        .btn-plan:hover { background: var(--gold); color: black; }
-
-        ul { list-style: none; text-align: left; margin-top: 30px; color: #ccc; font-size: 0.85rem; }
-        li { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-        li i { color: var(--gold); font-size: 0.7rem; }
+        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10001; }
+        .notification { background: #111; border-left: 3px solid var(--gold); padding: 20px; margin-bottom: 10px; animation: slideIn 0.5s forwards; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
 
         .hidden { display: none !important; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-content { background: #0a0a0a; padding: 50px; border: 1px solid var(--gold); width: 400px; text-align: center; }
+        input { width: 100%; padding: 15px; margin: 10px 0; background: #000; border: 1px solid #222; color: white; outline: none; }
     </style>
 </head>
 <body>
 
-    <div id="notification-container"></div>
     <div id="cursor"></div>
+    <div id="cursor-blur"></div>
+    <div id="notification-container"></div>
 
     <div id="loginModal" class="modal">
-        <div class="modal-content ani-scale-in start-ani">
-            <h2 style="font-family:var(--font-logo); color:#fff; letter-spacing:3px; margin-bottom:20px;">ACCESO</h2>
+        <div class="modal-content">
+            <h2 style="font-family:var(--font-logo); margin-bottom:20px;">ACCESO</h2>
             <input type="text" id="loginUser" placeholder="USUARIO">
             <input type="password" id="loginPass" placeholder="CONTRASEÑA">
-            <button class="btn-outline" style="width:100%; border-color:var(--gold); color:var(--gold);" onclick="auth.login()">ENTRAR</button>
-            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.75rem; text-align:center;">¿No tienes cuenta? <span style="color:white">Regístrate</span></p>
+            <button class="btn-lux" style="width:100%; margin-top:20px;" onclick="auth.login()">ENTRAR</button>
+            <p onclick="ui.toggleModals()" style="color:var(--gold); cursor:pointer !important; margin-top:20px; font-size:0.7rem;">CREAR CUENTA</p>
         </div>
     </div>
 
-    <div id="registerModal" class="modal">
-        <div class="modal-content ani-scale-in start-ani">
-            <h2 style="font-family:var(--font-logo); color:#fff; letter-spacing:3px; margin-bottom:20px;">REGISTRO</h2>
-            <input type="text" id="regUser" placeholder="NUEVO USUARIO">
-            <input type="password" id="regPass" placeholder="CONTRASEÑA">
-            <button class="btn-outline" style="width:100%; border-color:var(--gold); color:var(--gold);" onclick="auth.register()">CREAR CUENTA</button>
-            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.75rem; text-align:center;">¿Ya eres miembro? <span style="color:white">Inicia sesión</span></p>
-        </div>
-    </div>
-
-    <nav class="ani-fade-down" style="animation-delay: 0.5s;">
+    <nav>
         <div class="logo">HLAXHO</div>
-        <div class="nav-links ani-stagger" style="animation-delay: 1s;">
-            <a href="#">Philosophy</a>
-            <a href="#">Systems</a>
-            <a href="#">Products</a>
-            <a href="#">Metrics</a>
-            
+        <div class="nav-links">
+            <a href="#philosophy">Filosofía</a>
+            <a href="#plans">Productos</a>
             <div id="guest-nav">
-                <a href="#" onclick="ui.showModal('loginModal')">LOGIN</a>
+                <a href="#" onclick="ui.showModal('loginModal')">Cuenta</a>
             </div>
-            <div id="user-nav" class="hidden" style="display:flex; align-items:center;">
-                <span id="welcome-msg" style="color: var(--gold); font-size: 0.7rem; letter-spacing:1px;"></span>
-                <a href="#" onclick="auth.logout()" style="color: #ff4444 !important; font-size: 0.6rem; margin-left: 10px;">[ SALIR ]</a>
+            <div id="user-nav" class="hidden">
+                <span id="welcome-msg" style="color:var(--gold); font-size:0.7rem;"></span>
+                <a href="#" onclick="auth.logout()" style="margin-left:15px; color:#ff4444 !important;">SALIR</a>
             </div>
-            
-            <a href="#" class="contact-btn">CONTACT</a>
+            <a href="#" class="btn-contact">CONTACTO</a>
         </div>
     </nav>
 
     <header class="hero">
-        <h1 class="hero-title ani-scale-in" style="animation-delay: 1.5s;">HLAXHO</h1>
-        <div class="hero-subtitle-container ani-fade-up" style="animation-delay: 2s;">
-            <p class="hero-subtitle">PRECISION ENGINEERED. BEYOND SILICON.</p>
+        <h1 class="hero-title">HLAXHO</h1>
+        <div class="line-container">
+            <div class="line"></div>
+            <p class="hero-subtitle">Scripting de élite. Poder sin límites.</p>
+            <div class="line"></div>
         </div>
-        <div class="hero-btns ani-stagger" style="animation-delay: 2.5s;">
-            <a href="#" class="btn-outline">EXPLORE COLLECTION</a>
-            <a href="#" class="btn-outline">INITIATE CORE</a>
+        <div class="hero-btns">
+            <a href="#plans" class="btn-lux">VER PRODUCTOS</a>
+            <a href="#philosophy" class="btn-lux">CONÓCENOS</a>
         </div>
     </header>
 
+    <section class="philosophy reveal" id="philosophy">
+        <p>"No vendemos herramientas, vendemos ventaja competitiva. En HLAXHO, cada línea de código está diseñada para la perfección, rompiendo los límites de lo convencional."</p>
+    </section>
+
     <section class="plans" id="plans">
-        <h2 class="section-title ani-fade-up">TIER ACCESS</h2>
-        <p class="section-subtitle ani-fade-up">SELECCIONA TU NIVEL DE OPERADOR</p>
-        
-        <div class="premium-grid ani-stagger" style="animation-delay: 0.3s;">
-            <div class="p-card">
-                <h3 style="font-family:var(--font-logo); color:#fff;">VIP</h3>
-                <div class="price-tag">$19<span>/mes</span></div>
-                <ul>
-                    <li><i class="fas fa-circle"></i> Scripts de Rendimiento Base</li>
-                    <li><i class="fas fa-circle"></i> Acceso a Comunidad VIP</li>
-                </ul>
-                <button class="btn-plan" onclick="shop.buy('VIP')">ADQUIRIR TIER I</button>
+        <div class="premium-grid">
+            <div class="p-card reveal">
+                <span style="color:var(--gold); font-size:0.7rem; letter-spacing:2px;">TIER I</span>
+                <h3>VIP</h3>
+                <div class="price">$19</div>
+                <button class="btn-lux" style="width:100%" onclick="shop.buy('VIP')">COMPRAR ACCESO</button>
             </div>
-
-            <div class="p-card plus">
-                <h3 style="font-family:var(--font-logo); color:#fff;">VIP PLUS</h3>
-                <div class="price-tag">$45<span>/mes</span></div>
-                <ul>
-                    <li><i class="fas fa-circle"></i> Todo lo incluido en VIP</li>
-                    <li><i class="fas fa-circle"></i> Scripts Exclusivos (Tier 2)</li>
-                    <li><i class="fas fa-circle"></i> Acceso Anticipado a Betas</li>
-                </ul>
-                <button class="btn-plan" onclick="shop.buy('VIP PLUS')" style="background:#fff; color:#000; border-color:#fff;">ADQUIRIR TIER II</button>
+            <div class="p-card reveal" style="border-color:var(--gold)">
+                <span style="color:var(--gold); font-size:0.7rem; letter-spacing:2px;">MÁS VENDIDO</span>
+                <h3>VIP PLUS</h3>
+                <div class="price">$45</div>
+                <button class="btn-lux" style="width:100%; background:var(--gold); color:black;" onclick="shop.buy('VIP PLUS')">COMPRAR ACCESO</button>
             </div>
-
-            <div class="p-card super">
-                <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 3px 15px; font-size: 0.55rem; font-weight: 900; letter-spacing: 1px;">ELITE ACCESS</div>
-                <h3 style="font-family:var(--font-logo); color:var(--gold);">SUPER VIP</h3>
-                <div class="price-tag">$89<span>/mes</span></div>
-                <ul>
-                    <li><i class="fas fa-circle"></i> Acceso Total al Repositorio</li>
-                    <li><i class="fas fa-circle"></i> Herramientas Experimentales</li>
-                    <li><i class="fas fa-circle"></i> Soporte Directo 1:1</li>
-                    <li><i class="fas fa-circle"></i> Scripting Personalizado</li>
-                </ul>
-                <button class="btn-plan" onclick="shop.buy('SUPER VIP')">ADQUIRIR ELITE</button>
+            <div class="p-card reveal">
+                <span style="color:var(--gold); font-size:0.7rem; letter-spacing:2px;">ELITE</span>
+                <h3>SUPER VIP</h3>
+                <div class="price">$89</div>
+                <button class="btn-lux" style="width:100%" onclick="shop.buy('SUPER VIP')">COMPRAR ACCESO</button>
             </div>
         </div>
     </section>
 
     <script>
-        // --- SISTEMA DE ANIMACIÓN DE ENTRADA (GROK) ---
-        // Al cargar la página, buscamos elementos y activamos animaciones
-        window.addEventListener('load', () => {
-            // Animaciones individuales
-            document.querySelectorAll('.ani-fade-down, .ani-fade-up, .ani-scale-in').forEach(el => {
-                el.classList.add('start-ani');
+        // --- ANIMACIONES DE SCROLL ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
+        }, { threshold: 0.1 });
 
-            // Animaciones escalonadas (stagger)
-            document.querySelectorAll('.ani-stagger').forEach(container => {
-                container.classList.add('start-ani'); // Activa el contenedor
-                let delay = 0;
-                Array.from(container.children).forEach(child => {
-                    child.style.transitionDelay = delay + 's';
-                    child.style.opacity = '1';
-                    child.style.transform = 'translateY(0)';
-                    delay += 0.15; // Tiempo entre cada hijo
-                });
-            });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- CURSOR ---
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.getElementById('cursor');
+            const blur = document.getElementById('cursor-blur');
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            blur.style.left = e.clientX + 'px';
+            blur.style.top = e.clientY + 'px';
         });
 
-        // --- MANTENIENDO LÓGICA ANTERIOR ---
+        // --- LÓGICA DE USUARIO ---
         const auth = {
-            register() {
-                const u = document.getElementById('regUser').value;
-                const p = document.getElementById('regPass').value;
-                if(!u || !p) return ui.notify("DATOS INCOMPLETOS", "gold");
-                localStorage.setItem('hlaxho_user', JSON.stringify({user: u, pass: p}));
-                ui.notify("SISTEMA: Cuenta registrada.", "gold");
-                ui.toggleModals();
-            },
             login() {
                 const u = document.getElementById('loginUser').value;
-                const p = document.getElementById('loginPass').value;
-                const stored = JSON.parse(localStorage.getItem('hlaxho_user'));
-                if(stored && stored.user === u && stored.pass === p) {
-                    localStorage.setItem('hlaxho_session', u);
-                    location.reload();
-                } else { ui.notify("ERROR: Credenciales inválidas.", "gold"); }
+                if(!u) return;
+                localStorage.setItem('hlaxho_session', u);
+                location.reload();
             },
             logout() { localStorage.removeItem('hlaxho_session'); location.reload(); },
             check() {
                 const s = localStorage.getItem('hlaxho_session');
                 if(s) {
-                    document.getElementById('guest-nav').className = 'hidden';
-                    document.getElementById('user-nav').className = '';
-                    document.getElementById('welcome-msg').innerText = `OP: ${s.toUpperCase()}`;
+                    document.getElementById('guest-nav').classList.add('hidden');
+                    document.getElementById('user-nav').classList.remove('hidden');
+                    document.getElementById('welcome-msg').innerText = `ID: ${s.toUpperCase()}`;
                 }
             }
         };
@@ -253,26 +224,11 @@
             buy(plan) {
                 if(!localStorage.getItem('hlaxho_session')) {
                     ui.showModal('loginModal');
-                    return ui.notify("AVISO: Identifícate para continuar.", "gold");
+                    return;
                 }
-                ui.notify(`COMPRA INICIADA: ${plan}`, "gold");
+                ui.notify(`ORDEN INICIADA: ${plan}`);
                 setTimeout(() => {
-                    ui.notify(`PAGO CONFIRMADO. ¡Bienvenido al nivel ${plan}!`, "gold");
-                    setTimeout(() => {
-                        const ticketNotif = document.createElement('div');
-                        ticketNotif.className = 'notification';
-                        ticketNotif.style.borderColor = "#5865F2";
-                        ticketNotif.innerHTML = `
-                            <div style="display:flex; align-items:center; gap:15px">
-                                <i class="fab fa-discord" style="font-size:1.5rem; color:#5865F2"></i>
-                                <div style="font-size:0.8rem">
-                                    <strong style="display:block">PASO FINAL</strong>
-                                    Crea un ticket en Discord para recibir tu rol.
-                                </div>
-                            </div>
-                        `;
-                        document.getElementById('notification-container').appendChild(ticketNotif);
-                    }, 1500);
+                    ui.notify(`ÉXITO. Abre un ticket en Discord para tu rol.`);
                 }, 2000);
             }
         };
@@ -280,27 +236,14 @@
         const ui = {
             showModal(id) { document.getElementById(id).style.display = 'flex'; },
             hideModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); },
-            toggleModals() {
-                const l = document.getElementById('loginModal');
-                const r = document.getElementById('registerModal');
-                if(l.style.display === 'flex') { l.style.display = 'none'; ui.showModal('registerModal'); }
-                else { l.style.display = 'none'; ui.showModal('loginModal'); }
-            },
-            notify(msg, color) {
-                const c = document.getElementById('notification-container');
+            notify(msg) {
                 const n = document.createElement('div');
                 n.className = 'notification';
-                n.innerHTML = `<i class="fas fa-terminal" style="font-size:0.8rem; color:var(--gold)"></i> <span style="margin-left:10px; font-size:0.8rem;">${msg}</span>`;
-                c.appendChild(n);
-                setTimeout(() => n.remove(), 6000);
+                n.innerText = msg;
+                document.getElementById('notification-container').appendChild(n);
+                setTimeout(() => n.remove(), 5000);
             }
         };
-
-        // --- CURSOR ---
-        document.addEventListener('mousemove', (e) => {
-            document.getElementById('cursor').style.left = e.clientX + 'px';
-            document.getElementById('cursor').style.top = e.clientY + 'px';
-        });
 
         window.onclick = (e) => { if(e.target.className === 'modal') ui.hideModals(); };
         auth.check();
