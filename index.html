@@ -16,42 +16,47 @@
             --deep-black: #000000;
             --gray: #1a1a1a;
             --text-gray: #888;
-            --success: #28a745;
         }
 
-        /* --- ESTILOS BASE & CURSOR --- */
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
         body { background-color: var(--black); color: white; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+        
+        /* --- CURSOR --- */
         #cursor { position: fixed; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 10000; transition: transform 0.1s; transform: translate(-50%, -50%); }
         #cursor-blur { position: fixed; width: 150px; height: 150px; background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); opacity: 0.4; }
 
-        /* --- SISTEMA DE NOTIFICACIONES --- */
-        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10001; }
-        .notification { background: rgba(10, 10, 10, 0.9); border-left: 4px solid var(--gold); color: white; padding: 15px 25px; margin-bottom: 10px; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); backdrop-filter: blur(10px); display: flex; align-items: center; gap: 15px; animation: slideIn 0.5s ease forwards; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-        /* --- MODALES (LOGIN/REGISTRO) --- */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
-        .modal-content { background: #111; padding: 40px; border: 1px solid var(--gold); width: 100%; max-width: 400px; text-align: center; }
-        .modal-content h2 { font-family: 'Syncopate', sans-serif; color: var(--gold); margin-bottom: 20px; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--gray); color: white; outline: none; }
-        input:focus { border-color: var(--gold); }
+        /* --- NOTIFICACIONES --- */
+        #notification-container { position: fixed; top: 20px; right: 20px; z-index: 10001; width: 350px; }
+        .notification { background: rgba(10, 10, 10, 0.95); border-left: 4px solid var(--gold); color: white; padding: 20px; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); backdrop-filter: blur(15px); animation: slideIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideIn { from { transform: translateX(110%); } to { transform: translateX(0); } }
 
         /* --- NAVBAR --- */
         nav { position: fixed; top: 0; width: 100%; padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
-        .logo { font-family: 'Syncopate', sans-serif; font-weight: 700; color: var(--gold); font-size: 1.5rem; }
-        .user-zone { display: flex; gap: 20px; align-items: center; }
+        .logo { font-family: 'Syncopate', sans-serif; color: var(--gold); font-size: 1.5rem; letter-spacing: 5px; }
 
-        /* --- HERO --- */
-        .hero { height: 100vh; display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; background: radial-gradient(circle at 50% 50%, #1a1508 0%, var(--deep-black) 100%); }
-        .hero h1 { font-family: 'Syncopate', sans-serif; font-size: clamp(3rem, 10vw, 7rem); background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* --- MODALES --- */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .modal-content { background: #111; padding: 40px; border: 1px solid var(--gold); width: 90%; max-width: 400px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid var(--gray); color: white; outline: none; }
+
+        /* --- GRID DE PRECIOS --- */
+        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 100px 8%; margin-top: 50px; }
+        .p-card { background: linear-gradient(145deg, #0f0f0f, #050505); border: 1px solid var(--gray); padding: 45px 30px; position: relative; transition: 0.5s; text-align: center; }
+        .p-card:hover { border-color: var(--gold); transform: translateY(-15px); box-shadow: 0 15px 40px rgba(212,175,55,0.15); }
         
-        /* --- CARDS --- */
-        .premium-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 50px 10%; }
-        .p-card { background: #0f0f0f; border: 1px solid var(--gray); padding: 40px; transition: 0.4s; position: relative; }
-        .p-card:hover { border-color: var(--gold); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(212,175,55,0.1); }
-        .btn-gold { background: var(--gold); color: black; padding: 15px 30px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 20px; transition: 0.3s; border: 1px solid var(--gold); }
+        .p-card.plus { border-color: #888; } /* Estilo intermedio */
+        .p-card.super { border-width: 2px; border-color: var(--gold); background: radial-gradient(circle at top right, #151208, #050505); }
+
+        .tier-label { font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); font-weight: 900; margin-bottom: 10px; display: block; }
+        .price-tag { font-size: 3.5rem; font-weight: 900; margin: 20px 0; font-family: 'Syncopate', sans-serif; }
+        .price-tag span { font-size: 1rem; color: var(--text-gray); }
+
+        .btn-gold { background: var(--gold); color: black; padding: 18px; text-decoration: none; font-weight: 900; display: block; margin-top: 30px; transition: 0.3s; border: 1px solid var(--gold); text-transform: uppercase; letter-spacing: 2px; }
         .btn-gold:hover { background: transparent; color: var(--gold); }
+
+        ul { list-style: none; text-align: left; margin-top: 30px; }
+        li { margin-bottom: 12px; color: #ccc; font-size: 0.9rem; }
+        li i { color: var(--gold); margin-right: 10px; }
 
         .hidden { display: none; }
     </style>
@@ -64,21 +69,21 @@
 
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <h2>Acceso</h2>
-            <input type="text" id="loginUser" placeholder="Usuario">
-            <input type="password" id="loginPass" placeholder="Contraseña">
-            <button class="btn-gold" style="width:100%" onclick="auth.login()">Entrar</button>
-            <p style="margin-top:15px; font-size:0.8rem; color:var(--text-gray)">¿No tienes cuenta? <span onclick="ui.toggleModals()" style="color:var(--gold); cursor:pointer !important;">Regístrate</span></p>
+            <h2 style="font-family:'Syncopate'; color:var(--gold)">ACCESO</h2>
+            <input type="text" id="loginUser" placeholder="USUARIO">
+            <input type="password" id="loginPass" placeholder="CONTRASEÑA">
+            <button class="btn-gold" style="width:100%" onclick="auth.login()">ENTRAR AL SISTEMA</button>
+            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.8rem">¿No tienes cuenta? <span style="color:white">Regístrate aquí</span></p>
         </div>
     </div>
 
     <div id="registerModal" class="modal">
         <div class="modal-content">
-            <h2>Registro</h2>
-            <input type="text" id="regUser" placeholder="Nuevo Usuario">
-            <input type="password" id="regPass" placeholder="Contraseña">
-            <button class="btn-gold" style="width:100%" onclick="auth.register()">Crear Cuenta</button>
-            <p style="margin-top:15px; font-size:0.8rem; color:var(--text-gray)">¿Ya tienes cuenta? <span onclick="ui.toggleModals()" style="color:var(--gold); cursor:pointer !important;">Inicia Sesión</span></p>
+            <h2 style="font-family:'Syncopate'; color:var(--gold)">REGISTRO</h2>
+            <input type="text" id="regUser" placeholder="NUEVO USUARIO">
+            <input type="password" id="regPass" placeholder="CONTRASEÑA">
+            <button class="btn-gold" style="width:100%" onclick="auth.register()">CREAR IDENTIDAD</button>
+            <p onclick="ui.toggleModals()" style="color:var(--text-gray); cursor:pointer !important; margin-top:15px; font-size:0.8rem">¿Ya eres miembro? <span style="color:white">Inicia sesión</span></p>
         </div>
     </div>
 
@@ -86,42 +91,58 @@
         <div class="logo">HLAXHO</div>
         <div class="user-zone">
             <div id="guest-nav">
-                <a href="#" onclick="ui.showModal('loginModal')" style="color: var(--gold); text-decoration: none; font-size: 0.8rem; letter-spacing: 2px;">INICIAR SESIÓN</a>
+                <a href="#" onclick="ui.showModal('loginModal')" style="color: white; text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; border: 1px solid var(--gold); padding: 8px 15px;">LOGIN</a>
             </div>
             <div id="user-nav" class="hidden">
-                <span id="welcome-msg" style="color: var(--text-gray); font-size: 0.8rem;"></span>
-                <a href="#" onclick="auth.logout()" style="color: #ff4444; text-decoration: none; font-size: 0.8rem; margin-left: 20px;">SALIR</a>
+                <span id="welcome-msg" style="color: var(--gold); font-size: 0.8rem; font-weight: 900;"></span>
+                <a href="#" onclick="auth.logout()" style="color: #ff4444; text-decoration: none; font-size: 0.7rem; margin-left: 15px; font-weight: bold;">[ DESCONECTAR ]</a>
             </div>
         </div>
     </nav>
 
-    <header class="hero">
-        <h1 data-aos="fade-down">HLAXHO</h1>
-        <p style="letter-spacing: 5px; color: var(--gold); margin-top: 10px;">SCRIPTS DE ÉLITE | PODER PREMIUM</p>
+    <header style="height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-top: 100px;">
+        <h1 data-aos="zoom-in" style="font-family:'Syncopate'; font-size: 5rem; margin-bottom: 10px;">PRICING</h1>
+        <p style="color: var(--gold); letter-spacing: 8px; font-weight: 300;">SELECCIONA TU NIVEL DE ACCESO</p>
     </header>
 
-    <section id="plans">
-        <div class="premium-grid">
-            <div class="p-card" data-aos="fade-up">
-                <h3>VIP ACCESS</h3>
-                <div style="font-size: 2.5rem; margin: 20px 0;">$19<span style="font-size: 1rem;">/mes</span></div>
-                <ul style="list-style:none; color: var(--text-gray); margin-bottom: 20px;">
-                    <li><i class="fas fa-check"></i> Scripts Básicos</li>
-                    <li><i class="fas fa-check"></i> Soporte Discord</li>
-                </ul>
-                <button class="btn-gold" onclick="shop.buy('VIP')">ADQUIRIR TIER I</button>
-            </div>
+    <section class="premium-grid">
+        <div class="p-card" data-aos="fade-up">
+            <span class="tier-label">NIVEL I</span>
+            <h2 style="font-family:'Syncopate'">VIP</h2>
+            <div class="price-tag">$19<span>/mes</span></div>
+            <ul>
+                <li><i class="fas fa-check"></i> Scripts de Rendimiento Base</li>
+                <li><i class="fas fa-check"></i> Acceso a Comunidad VIP</li>
+                <li><i class="fas fa-check"></i> Actualizaciones Mensuales</li>
+            </ul>
+            <button class="btn-gold" onclick="shop.buy('VIP')">OBTENER VIP</button>
+        </div>
 
-            <div class="p-card" style="border-color: var(--gold);" data-aos="fade-up" data-aos-delay="200">
-                <h3 style="color: var(--gold);">SUPER VIP</h3>
-                <div style="font-size: 2.5rem; margin: 20px 0;">$89<span style="font-size: 1rem;">/mes</span></div>
-                <ul style="list-style:none; color: var(--text-gray); margin-bottom: 20px;">
-                    <li><i class="fas fa-check"></i> Acceso Total</li>
-                    <li><i class="fas fa-check"></i> Soporte Prioritario 1:1</li>
-                    <li><i class="fas fa-check"></i> Scripts Personalizados</li>
-                </ul>
-                <button class="btn-gold" onclick="shop.buy('SUPER VIP')">ADQUIRIR ELITE</button>
-            </div>
+        <div class="p-card plus" data-aos="fade-up" data-aos-delay="100">
+            <span class="tier-label" style="color: #fff;">NIVEL II</span>
+            <h2 style="font-family:'Syncopate'">VIP PLUS</h2>
+            <div class="price-tag">$45<span>/mes</span></div>
+            <ul>
+                <li><i class="fas fa-check"></i> Todo lo incluido en VIP</li>
+                <li><i class="fas fa-check"></i> Scripts Exclusivos (Tier 2)</li>
+                <li><i class="fas fa-check"></i> Acceso Anticipado a Betas</li>
+                <li><i class="fas fa-check"></i> Canal Privado VIP+</li>
+            </ul>
+            <button class="btn-gold" style="background: #eee; border-color:#eee" onclick="shop.buy('VIP PLUS')">OBTENER VIP PLUS</button>
+        </div>
+
+        <div class="p-card super" data-aos="fade-up" data-aos-delay="200">
+            <div style="position: absolute; top: 0; left: 50%; transform: translateX(-50%); background: var(--gold); color: black; padding: 5px 20px; font-size: 0.6rem; font-weight: 900; letter-spacing: 2px;">MÁXIMO PODER</div>
+            <span class="tier-label">NIVEL ELITE</span>
+            <h2 style="font-family:'Syncopate'">SUPER VIP</h2>
+            <div class="price-tag">$89<span>/mes</span></div>
+            <ul>
+                <li><i class="fas fa-check"></i> Acceso Total al Repositorio</li>
+                <li><i class="fas fa-check"></i> Herramientas Experimentales</li>
+                <li><i class="fas fa-check"></i> Soporte Directo por Ingenieros</li>
+                <li><i class="fas fa-check"></i> Scripting Personalizado</li>
+            </ul>
+            <button class="btn-gold" onclick="shop.buy('SUPER VIP')">ADQUIRIR ELITE</button>
         </div>
     </section>
 
@@ -129,85 +150,83 @@
     <script>
         AOS.init();
 
-        // --- SISTEMA DE AUTENTICACIÓN (LÓGICA DE GROK) ---
         const auth = {
             register() {
                 const u = document.getElementById('regUser').value;
                 const p = document.getElementById('regPass').value;
-                if(!u || !p) return ui.notify("Completa los campos", "error");
-                
+                if(!u || !p) return ui.notify("Error: Datos incompletos", "gold");
                 localStorage.setItem('hlaxho_user', JSON.stringify({user: u, pass: p}));
-                ui.notify("Cuenta creada con éxito", "gold");
+                ui.notify("SISTEMA: Cuenta registrada correctamente.", "gold");
                 ui.toggleModals();
             },
             login() {
                 const u = document.getElementById('loginUser').value;
                 const p = document.getElementById('loginPass').value;
                 const stored = JSON.parse(localStorage.getItem('hlaxho_user'));
-
                 if(stored && stored.user === u && stored.pass === p) {
                     localStorage.setItem('hlaxho_session', u);
-                    ui.notify(`Bienvenido, ${u}`, "gold");
                     location.reload();
-                } else {
-                    ui.notify("Credenciales incorrectas", "error");
-                }
+                } else { ui.notify("ERROR: Credenciales inválidas.", "gold"); }
             },
-            logout() {
-                localStorage.removeItem('hlaxho_session');
-                location.reload();
-            },
-            checkSession() {
-                const session = localStorage.getItem('hlaxho_session');
-                if(session) {
-                    document.getElementById('guest-nav').classList.add('hidden');
-                    document.getElementById('user-nav').classList.remove('hidden');
-                    document.getElementById('welcome-msg').innerText = `OPERADOR: ${session.toUpperCase()}`;
-                    return true;
+            logout() { localStorage.removeItem('hlaxho_session'); location.reload(); },
+            check() {
+                const s = localStorage.getItem('hlaxho_session');
+                if(s) {
+                    document.getElementById('guest-nav').className = 'hidden';
+                    document.getElementById('user-nav').className = '';
+                    document.getElementById('welcome-msg').innerText = `ID: ${s.toUpperCase()}`;
                 }
-                return false;
             }
         };
 
-        // --- SISTEMA DE TIENDA & NOTIFICACIONES ---
         const shop = {
             buy(plan) {
                 if(!localStorage.getItem('hlaxho_session')) {
                     ui.showModal('loginModal');
-                    ui.notify("Inicia sesión para comprar", "error");
-                    return;
+                    return ui.notify("AVISO: Identifícate para continuar.", "gold");
                 }
-                ui.notify(`PROCESANDO PAGO...`, "gold");
+                ui.notify(`COMPRA INICIADA: ${plan}`, "gold");
                 setTimeout(() => {
-                    ui.notify(`¡ÉXITO! Has adquirido ${plan}`, "success");
-                    // Aquí iría la integración con Stripe/PayPal
+                    ui.notify(`PAGO CONFIRMADO. ¡Bienvenido al nivel ${plan}!`, "gold");
+                    setTimeout(() => {
+                        // Notificación de ticket
+                        const ticketNotif = document.createElement('div');
+                        ticketNotif.className = 'notification';
+                        ticketNotif.style.borderColor = "#5865F2";
+                        ticketNotif.innerHTML = `
+                            <div style="display:flex; align-items:center; gap:15px">
+                                <i class="fab fa-discord" style="font-size:2rem; color:#5865F2"></i>
+                                <div>
+                                    <strong style="display:block">PASO FINAL</strong>
+                                    <small>Crea un <b>ticket en Discord</b> para recibir tu rol de ${plan} automáticamente.</small>
+                                </div>
+                            </div>
+                        `;
+                        document.getElementById('notification-container').appendChild(ticketNotif);
+                    }, 1500);
                 }, 2000);
             }
         };
 
-        // --- INTERFAZ UI ---
         const ui = {
             showModal(id) { document.getElementById(id).style.display = 'flex'; },
-            hideModals() { 
-                document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); 
-            },
+            hideModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); },
             toggleModals() {
                 const l = document.getElementById('loginModal');
                 const r = document.getElementById('registerModal');
                 if(l.style.display === 'flex') { l.style.display = 'none'; r.style.display = 'flex'; }
                 else { l.style.display = 'flex'; r.style.display = 'none'; }
             },
-            notify(msg, type) {
-                const container = document.getElementById('notification-container');
+            notify(msg, color) {
+                const c = document.getElementById('notification-container');
                 const n = document.createElement('div');
                 n.className = 'notification';
-                n.innerHTML = `<i class="fas fa-shield-alt" style="color:var(--gold)"></i> <span>${msg}</span>`;
-                container.appendChild(n);
-                setTimeout(() => n.remove(), 4000);
+                n.innerHTML = `<i class="fas fa-terminal"></i> <span style="margin-left:10px">${msg}</span>`;
+                c.appendChild(n);
+                setTimeout(() => n.remove(), 6000);
             }
         };
 
-        // --- CURSOR ---
         document.addEventListener('mousemove', (e) => {
             document.getElementById('cursor').style.left = e.clientX + 'px';
             document.getElementById('cursor').style.top = e.clientY + 'px';
@@ -215,11 +234,8 @@
             document.getElementById('cursor-blur').style.top = e.clientY + 'px';
         });
 
-        // Cerrar modales al hacer clic fuera
         window.onclick = (e) => { if(e.target.className === 'modal') ui.hideModals(); };
-
-        // Iniciar
-        auth.checkSession();
+        auth.check();
     </script>
 </body>
 </html>
